@@ -2,8 +2,8 @@ package com.example.habitstracker
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.habitstracker.data.HabitItem
 
@@ -32,19 +32,28 @@ class MyItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.name
-        holder.contentView.text = item.description
+        holder.itemTitle.text = item.name
+        holder.itemDescriptions.text = item.description
+        holder.itemPriority.text = "Приоритет: ${item.priority.toString()}"
+        holder.itemPeriod.text = "Периодичность: ${item.period.toString()}"
+        holder.itemColorAndIsGood.setColorFilter(item.color)
+        if (item.isGood)
+            holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_up_24)
+        else
+            holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_down_24)
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentHabitsBinding) : RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemTitle
-        val contentView: TextView = binding.itemDescription
+        val itemTitle: TextView = binding.itemTitle
+        val itemDescriptions: TextView = binding.itemDescription
+        val itemPriority: TextView = binding.itemPriority
+        val itemPeriod: TextView = binding.itemPeriod
+        val itemColorAndIsGood: ImageView = binding.itemColorAndIsGood
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " '" + itemDescriptions.text + "'"
         }
     }
-
 }

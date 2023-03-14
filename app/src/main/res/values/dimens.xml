@@ -2,5 +2,6 @@
 <resources>
     <dimen name="default_margin">16dp</dimen>
     <dimen name="float_button_layout_margin">30dp</dimen>
-    <dimen name="item_color_size">65dp</dimen>
+    <dimen name="item_thumb_size">40dp</dimen>
+    <dimen name="small_margin">6dp</dimen>
 </resources>

@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/item_color_and_is_good"
-        android:layout_width="@dimen/item_color_size"
-        android:layout_height="@dimen/item_color_size"
+        android:layout_width="@dimen/item_thumb_size"
+        android:layout_height="@dimen/item_thumb_size"
         android:layout_margin="@dimen/default_margin"
         android:contentDescription="TODO"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +33,8 @@
         android:id="@+id/item_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginTop="@dimen/small_margin"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintStart_toEndOf="@id/item_color_and_is_good"
         app:layout_constraintTop_toBottomOf="@+id/item_title"
@@ -55,9 +56,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         tools:text="periodical"
-        app:layout_constraintStart_toEndOf="@+id/item_color_and_is_good"
-        app:layout_constraintTop_toBottomOf="@+id/item_priority" />
+        app:layout_constraintStart_toEndOf="@+id/item_priority"
+        app:layout_constraintTop_toBottomOf="@+id/item_description" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DCDCDC"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_priority"
+        android:layout_marginTop="@dimen/default_margin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    data class HabitItem(val name: String,val description: String, val priority: Int, val type: Boolean, val period: Int, val color: Int)-->
