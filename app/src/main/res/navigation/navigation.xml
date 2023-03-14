@@ -11,7 +11,8 @@
         tools:layout="@layout/fragment_habits_list" >
         <action
             android:id="@+id/action_habitsFragment_to_detailHabitFragment"
-            app:destination="@id/detailHabitFragment" />
+            app:destination="@id/detailHabitFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/detailHabitFragment"

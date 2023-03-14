@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.data
 
 import android.graphics.Color
 
