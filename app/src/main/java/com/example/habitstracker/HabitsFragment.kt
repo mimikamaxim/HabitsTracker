@@ -33,11 +33,12 @@ class HabitsFragment : Fragment() {
             adapter = MyItemRecyclerViewAdapter(dataBase.getHabitItemsList())
         }
         binding.newItem.setOnClickListener {
-//            val args: Bundle = Bundle()
-//            args.putString("1","YA YA YA")
-//            findNavController().navigate(R.id.detailHabitFragment,args)
+            val args: Bundle = Bundle()
+            args.putString("2","DADADA")
+            args.putString("1","YA YA YA")
+            findNavController().navigate(R.id.detailHabitFragment,args)
 //            DetailHabitFragment.newInstance("asdf","fdas")
-            findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
+//            findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
         }
         return binding.root
     }

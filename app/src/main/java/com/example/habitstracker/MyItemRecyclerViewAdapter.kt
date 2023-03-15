@@ -35,6 +35,7 @@ class MyItemRecyclerViewAdapter(
         holder.itemTitle.text = item.name
         holder.itemDescriptions.text = item.description
         holder.itemPriority.text = "Приоритет: ${item.priority.toString()}"
+        holder.itemAmountDone.text = "Выполнено: ${item.amountDone}"
         holder.itemPeriod.text = "Периодичность: ${item.period.toString()}"
         holder.itemColorAndIsGood.setColorFilter(item.color)
         if (item.isGood)
@@ -49,6 +50,7 @@ class MyItemRecyclerViewAdapter(
         val itemTitle: TextView = binding.itemTitle
         val itemDescriptions: TextView = binding.itemDescription
         val itemPriority: TextView = binding.itemPriority
+        val itemAmountDone: TextView = binding.itemAmountDone
         val itemPeriod: TextView = binding.itemPeriod
         val itemColorAndIsGood: ImageView = binding.itemColorAndIsGood
 

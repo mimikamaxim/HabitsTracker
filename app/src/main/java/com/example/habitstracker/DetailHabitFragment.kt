@@ -26,6 +26,7 @@ class DetailHabitFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("TAG1",arguments.toString())
         arguments?.let {
             param1 = it.getString("1")
             param2 = it.getString(ARG_PARAM2)
@@ -38,7 +39,8 @@ class DetailHabitFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentDetailHabitBinding.inflate(inflater,container,false)
-        Log.i("TAG",param1.toString())
+        Log.i("TAG2",(arguments?.getString("2") ?: "nonono").toString())
+        Log.i("TAG3",param1.toString())
         return binding.root
     }
 

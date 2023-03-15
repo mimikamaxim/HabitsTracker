@@ -45,9 +45,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        tools:text="priority"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/item_color_and_is_good"
+        app:layout_constraintTop_toBottomOf="@+id/item_description"
+        tools:text="priority" />
+
+    <TextView
+        android:id="@+id/item_amount_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="amount"
+        android:layout_margin="@dimen/default_margin"
+        app:layout_constraintStart_toEndOf="@+id/item_priority"
         app:layout_constraintTop_toBottomOf="@+id/item_description" />
 
     <TextView
@@ -55,17 +64,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
-        tools:text="periodical"
-        app:layout_constraintStart_toEndOf="@+id/item_priority"
-        app:layout_constraintTop_toBottomOf="@+id/item_description" />
+        app:layout_constraintStart_toEndOf="@+id/item_color_and_is_good"
+        app:layout_constraintTop_toBottomOf="@+id/item_priority"
+        tools:text="periodical" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="@dimen/default_margin"
         android:background="#DCDCDC"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/item_priority"
-        android:layout_marginTop="@dimen/default_margin"/>
+        app:layout_constraintTop_toBottomOf="@+id/item_period" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
