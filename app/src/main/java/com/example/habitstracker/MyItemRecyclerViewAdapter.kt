@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.habitstracker.data.HabitItem
+
 
 import com.example.habitstracker.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.habitstracker.databinding.FragmentHabitsBinding
@@ -15,7 +18,7 @@ import com.example.habitstracker.databinding.FragmentHabitsBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
-    private val values: List<HabitItem>
+    private val values: List<HabitItem>, private val clickItemHandler: ClickItemHandler
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,6 +45,9 @@ class MyItemRecyclerViewAdapter(
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_up_24)
         else
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_down_24)
+        holder.rootView.setOnClickListener {//TODO have a q Can I get to detail fr from here?
+            clickItemHandler.onClickItemHandler(it,position)
+        }
     }
 
     override fun getItemCount(): Int = values.size
@@ -53,6 +59,7 @@ class MyItemRecyclerViewAdapter(
         val itemAmountDone: TextView = binding.itemAmountDone
         val itemPeriod: TextView = binding.itemPeriod
         val itemColorAndIsGood: ImageView = binding.itemColorAndIsGood
+        val rootView = binding.root
 
         override fun toString(): String {
             return super.toString() + " '" + itemDescriptions.text + "'"

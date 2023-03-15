@@ -1,11 +1,18 @@
 package com.example.habitstracker
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.core.text.isDigitsOnly
+import androidx.navigation.fragment.findNavController
+import com.example.habitstracker.data.HabitItem
+import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,25 +30,90 @@ class DetailHabitFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentDetailHabitBinding
+    private var idItem: Int? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.i("TAG1",arguments.toString())
-        arguments?.let {
-            param1 = it.getString("1")
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) { //TODO remove at final
+//        super.onCreate(savedInstanceState)
+//        Log.i("TAG1", arguments.toString())
+//        arguments?.let {
+//            param1 = it.getString("1")
+//            param2 = it.getString(ARG_PARAM2)
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentDetailHabitBinding.inflate(inflater,container,false)
-        Log.i("TAG2",(arguments?.getString("2") ?: "nonono").toString())
-        Log.i("TAG3",param1.toString())
+        binding = FragmentDetailHabitBinding.inflate(inflater, container, false)
+        arguments?.let {
+            idItem = it.getInt(KEY_ID)
+            val habit = HabitItemsDB.getHabit(idItem!!)
+            with(binding){
+//                val name: String,
+//                val description: String,
+//                val priority: Int,
+//                val isGood: Boolean,
+//                val amountDone: Int,
+//                val period: String,
+//                val color: Int
+                habitTitleEditText.setText(habit.name)
+                habitDescriptionEditText.setText(habit.description)
+                habitPrioritySpinner.setSelection(habit.priority)
+                if (habit.isGood) radioGroup.check(R.id.is_good) else radioGroup.check(R.id.is_bad)
+                habitDoneAmountEditText.setText(habit.amountDone.toString())
+                habitPeriodicEditText.setText(habit.period)
+            }
+        }
+//        Log.i("TAG2", (arguments?.getString("2") ?: "nonono").toString())
+//        Log.i("TAG3", param1.toString())
+
+        binding.saveBtn.setOnClickListener {
+            getHabitItem()?.let {
+                if (arguments==null)
+                    HabitItemsDB.addHabit(it)
+                else
+                    HabitItemsDB.updateHabit(idItem!!,it)
+                findNavController().navigate(R.id.habitsFragment)
+            }
+        }
+
         return binding.root
+    }
+
+    private fun getHabitItem(): HabitItem? {
+        val name: String = binding.habitTitleEditText.text.toString()
+        if (name.isEmpty()) {
+            makeToast("Введите название привычки")
+            return null
+        }
+        val description: String = binding.habitDescriptionEditText.text.toString()
+        if (description.isEmpty()) {
+            makeToast("Введите описание привычки")
+            return null
+        }
+        val priority: Int = binding.habitPrioritySpinner.selectedItemPosition
+        val isGood: Boolean = binding.radioGroup.checkedRadioButtonId==R.id.is_good
+        Log.i("TAG4", binding.radioGroup.checkedRadioButtonId.toString())
+        var amountDone: Int = 0
+        if (binding.habitDoneAmountEditText.text.toString().isEmpty()) {
+            makeToast("Введите сколько раз сделано")
+            return null
+        }
+        else amountDone = binding.habitDoneAmountEditText.text.toString().toInt()
+        val period: String = binding.habitPeriodicEditText.text.toString()
+        if (period.isEmpty()) {
+            makeToast("Введите периодичность")
+            return null
+        }
+        val color: Int = Color.GRAY //TODO make color picker
+
+        return HabitItem(name, description, priority, isGood, amountDone, period, color)
+    }
+
+    private fun makeToast(s: String) {
+        Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package com.example.habitstracker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,32 +15,44 @@ import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentHabitsListBinding
 import com.example.habitstracker.placeholder.PlaceholderContent
 
+interface ClickItemHandler {
+    fun onClickItemHandler(view:View, id: Int)
+}
 /**
  * A fragment representing a list of Items.
  */
-class HabitsFragment : Fragment() {
+class HabitsFragment : Fragment(), ClickItemHandler {
 
     private lateinit var binding: FragmentHabitsListBinding
+    private lateinit var clickItemHandler: ClickItemHandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHabitsListBinding.inflate(inflater,container,false)
-        val dataBase = HabitItemsDB()
-        dataBase.fillDBsample()
+//        HabitItemsDB.fillDBsample()//TODO remove in final version
+        clickItemHandler = this //TODO magic
         with(binding.list){
             layoutManager = LinearLayoutManager(context)
-            adapter = MyItemRecyclerViewAdapter(dataBase.getHabitItemsList())
+            adapter = MyItemRecyclerViewAdapter(HabitItemsDB.getHabitItemsList(),clickItemHandler)
         }
         binding.newItem.setOnClickListener {
-            val args: Bundle = Bundle()
-            args.putString("2","DADADA")
-            args.putString("1","YA YA YA")
-            findNavController().navigate(R.id.detailHabitFragment,args)
+//            val args: Bundle = Bundle()
+//            args.putString("2","DADADA")
+//            args.putString("1","YA YA YA")
+//            findNavController().navigate(R.id.detailHabitFragment,args) //TODO remove in final
 //            DetailHabitFragment.newInstance("asdf","fdas")
 //            findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
+            findNavController().navigate(R.id.detailHabitFragment)
         }
         return binding.root
+    }
+
+    override fun onClickItemHandler (view: View, id: Int){
+        Log.i("TAGG", "item $id is ${HabitItemsDB.getHabit(id)}")
+        val args: Bundle = Bundle()
+        args.putInt(KEY_ID,id)
+        findNavController().navigate(R.id.detailHabitFragment, args)
     }
 }

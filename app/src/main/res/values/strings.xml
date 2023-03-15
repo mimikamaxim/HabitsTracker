@@ -5,4 +5,12 @@
     <string name="add_new_item">Добавить новый элемент</string>
     <string name="dummy_text">Dummy text</string>
     <string name="dummy_title">Dummy title</string>
+    <string-array name="priority_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

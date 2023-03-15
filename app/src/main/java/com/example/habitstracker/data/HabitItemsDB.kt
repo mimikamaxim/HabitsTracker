@@ -2,7 +2,7 @@ package com.example.habitstracker.data
 
 import android.graphics.Color
 
-class HabitItemsDB {
+object HabitItemsDB {
     private val habitItems = mutableListOf<HabitItem>()
 
     fun getHabitItemsList(): List<HabitItem> {
