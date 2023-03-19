@@ -38,7 +38,7 @@ class HabitsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHabitsListBinding.inflate(inflater,container,false)
-//        HabitItemsDB.fillDBsample()//TODO remove in final version
+        devDoSomeStuff {HabitItemsDB.fillDBsample()}
         with(binding.list){
             layoutManager = LinearLayoutManager(context)
             adapter = MyItemRecyclerViewAdapter(HabitItemsDB.getHabitItemsList(),clickItemHandler)
@@ -52,6 +52,7 @@ class HabitsFragment : Fragment() {
             findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
 //            findNavController().navigate(R.id.detailHabitFragment)
         }
+        devDoSomeStuff {Log.i("TAG","RUN")}
         return binding.root
     }
 }
