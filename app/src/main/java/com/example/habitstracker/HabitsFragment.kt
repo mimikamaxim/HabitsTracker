@@ -43,8 +43,8 @@ class HabitsFragment : Fragment(), ClickItemHandler {
 //            args.putString("1","YA YA YA")
 //            findNavController().navigate(R.id.detailHabitFragment,args) //TODO remove in final
 //            DetailHabitFragment.newInstance("asdf","fdas")
-//            findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
-            findNavController().navigate(R.id.detailHabitFragment)
+            findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
+//            findNavController().navigate(R.id.detailHabitFragment)
         }
         return binding.root
     }
