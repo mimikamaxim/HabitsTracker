@@ -21,10 +21,17 @@ interface ClickItemHandler {
 /**
  * A fragment representing a list of Items.
  */
-class HabitsFragment : Fragment(), ClickItemHandler {
+class HabitsFragment : Fragment() {
 
     private lateinit var binding: FragmentHabitsListBinding
-    private lateinit var clickItemHandler: ClickItemHandler
+    private val clickItemHandler = object : ClickItemHandler {
+        override fun onClickItemHandler (view: View, id: Int){
+            Log.i("TAGG", "item $id is ${HabitItemsDB.getHabit(id)}")
+            val args: Bundle = Bundle()
+            args.putInt(KEY_ID,id)
+            findNavController().navigate(R.id.detailHabitFragment, args)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +39,6 @@ class HabitsFragment : Fragment(), ClickItemHandler {
     ): View? {
         binding = FragmentHabitsListBinding.inflate(inflater,container,false)
 //        HabitItemsDB.fillDBsample()//TODO remove in final version
-        clickItemHandler = this //TODO magic
         with(binding.list){
             layoutManager = LinearLayoutManager(context)
             adapter = MyItemRecyclerViewAdapter(HabitItemsDB.getHabitItemsList(),clickItemHandler)
@@ -47,12 +53,5 @@ class HabitsFragment : Fragment(), ClickItemHandler {
 //            findNavController().navigate(R.id.detailHabitFragment)
         }
         return binding.root
-    }
-
-    override fun onClickItemHandler (view: View, id: Int){
-        Log.i("TAGG", "item $id is ${HabitItemsDB.getHabit(id)}")
-        val args: Bundle = Bundle()
-        args.putInt(KEY_ID,id)
-        findNavController().navigate(R.id.detailHabitFragment, args)
     }
 }
