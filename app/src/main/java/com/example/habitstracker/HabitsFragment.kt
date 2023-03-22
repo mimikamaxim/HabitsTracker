@@ -52,7 +52,7 @@ class HabitsFragment : Fragment() {
             findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
 //            findNavController().navigate(R.id.detailHabitFragment)
         }
-        devDoSomeStuff {Log.i("TAG","RUN")}
+        devDoSomeStuff {Log.i(TAG,"RUN")}
         return binding.root
     }
 }

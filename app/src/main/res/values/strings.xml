@@ -7,6 +7,9 @@
     <string name="about_title">About Habits tracker</string>
     <string name="detail_title">Habit detail</string>
     <string name="habits_list_title">Habits list</string>
+    <string name="welcome_massage">Welcome to Habits tracker</string>
+    <string name="logo_text">Logo</string>
+    <string name="start_text">Start</string>
     <string-array name="priority_values">
         <item>0</item>
         <item>1</item>

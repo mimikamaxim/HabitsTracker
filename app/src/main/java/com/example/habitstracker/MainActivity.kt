@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val binding = ActivityMainBinding.inflate(layoutInflater,null,false)
+//        val binding = ActivityMainBinding.inflate(layoutInflater,null,false)
 //        drawerLayout = binding.drawerLayout//TODO q
         drawerLayout = findViewById(R.id.drawer_layout)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
         val navView: NavigationView =
             findViewById<NavigationView>(R.id.nav_view)
-        NavigationUI.setupWithNavController(navView, navController)
 //            binding.navView//TODO q
+        NavigationUI.setupWithNavController(navView, navController)
 //        navView.setNavigationItemSelectedListener{
 //            val id = it.itemId
 //            Log.i("TAG",it.toString())
