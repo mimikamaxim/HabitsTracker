@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/habitsFragment"
         android:name="com.example.habitstracker.HabitsFragment"
-        android:label="fragment_habits_list"
+        android:label="@string/habits_list_title"
         tools:layout="@layout/fragment_habits_list" >
         <action
             android:id="@+id/action_habitsFragment_to_detailHabitFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/detailHabitFragment"
         android:name="com.example.habitstracker.DetailHabitFragment"
-        android:label="DetailHabitFragment"
+        android:label="@string/detail_title"
         tools:layout="@layout/fragment_detail_habit"/>
     <fragment
         android:id="@+id/aboutFragment"

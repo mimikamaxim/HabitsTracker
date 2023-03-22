@@ -5,6 +5,8 @@
     <string name="dummy_text">Dummy text</string>
     <string name="dummy_title">Dummy title</string>
     <string name="about_title">About Habits tracker</string>
+    <string name="detail_title">Habit detail</string>
+    <string name="habits_list_title">Habits list</string>
     <string-array name="priority_values">
         <item>0</item>
         <item>1</item>
