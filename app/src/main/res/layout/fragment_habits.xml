@@ -5,7 +5,8 @@
     android:id="@+id/item_habit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textAlignment="center">
+    android:textAlignment="center"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/item_color_and_is_good"
@@ -24,9 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         android:textAppearance="?attr/textAppearanceListItem"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/item_color_and_is_good"
         app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"
         tools:text="@string/dummy_title" />
 
     <TextView
@@ -54,8 +55,8 @@
         android:id="@+id/item_amount_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="amount"
         android:layout_margin="@dimen/default_margin"
+        android:text="amount"
         app:layout_constraintStart_toEndOf="@+id/item_priority"
         app:layout_constraintTop_toBottomOf="@+id/item_description" />
 

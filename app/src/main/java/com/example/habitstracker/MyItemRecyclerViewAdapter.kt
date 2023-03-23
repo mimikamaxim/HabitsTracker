@@ -1,24 +1,24 @@
 package com.example.habitstracker
 
+import android.opengl.Visibility
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.habitstracker.data.HabitItem
+import com.example.habitstracker.data.HabitsType
 
 
 import com.example.habitstracker.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.habitstracker.databinding.FragmentHabitsBinding
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyItemRecyclerViewAdapter(
-    private val values: List<HabitItem>, private val clickItemHandler: ClickItemHandler
+    private val values: List<HabitItem>,
+    private val clickItemHandler: ClickItemHandler
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +37,7 @@ class MyItemRecyclerViewAdapter(
         val item = values[position]
         holder.itemTitle.text = item.name
         holder.itemDescriptions.text = item.description
-        holder.itemPriority.text = "Приоритет: ${item.priority.toString()}"
+        holder.itemPriority.text = "Приоритет: ${item.priority.toString()}"//TODO extract strings
         holder.itemAmountDone.text = "Выполнено: ${item.amountDone}"
         holder.itemPeriod.text = "Периодичность: ${item.period.toString()}"
         holder.itemColorAndIsGood.setColorFilter(item.color)
@@ -45,7 +45,7 @@ class MyItemRecyclerViewAdapter(
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_up_24)
         else
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_down_24)
-        holder.rootView.setOnClickListener {//TODO have a q Can I get to detail fr from here?
+        holder.rootView.setOnClickListener {//TODO hand over id
             clickItemHandler.onClickItemHandler(it,position)
         }
     }

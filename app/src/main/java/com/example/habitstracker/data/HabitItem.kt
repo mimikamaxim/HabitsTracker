@@ -8,7 +8,8 @@ data class HabitItem(
     val isGood: Boolean,
     val amountDone: Int,
     val period: String,
-    val color: Int
-)
+    val color: Int,
+    private val id: Int = -1
+) {
 
-
+}

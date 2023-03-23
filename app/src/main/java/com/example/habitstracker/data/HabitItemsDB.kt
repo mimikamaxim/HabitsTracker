@@ -10,13 +10,40 @@ object HabitItemsDB {
     }
 
     fun addHabit(habit: HabitItem) {
-        habitItems.add(habit)
+        habitItems.add(
+            HabitItem(
+                habit.name,
+                habit.description,
+                habit.priority,
+                habit.isGood,
+                habit.amountDone,
+                habit.period,
+                habit.color,
+                habitItems.size
+            )
+        )
+    }
+
+    fun getBadHabitItemsList(): List<HabitItem>{
+        val list = mutableListOf<HabitItem>()
+        habitItems.forEach {
+            if (!it.isGood) list.add(it)
+        }
+        return list
+    }
+
+    fun getGoodHabitItemsList(): List<HabitItem>{
+        val list = mutableListOf<HabitItem>()
+        habitItems.forEach {
+            if (it.isGood) list.add(it)
+        }
+        return list
     }
 
     fun getHabit(i: Int) = habitItems[i]
 
     fun updateHabit(i: Int, habit: HabitItem) {
-        habitItems[i] = habit
+        habitItems[i] = habit//TODO fix this
     }
 
     fun fillDBsample() {
@@ -27,3 +54,5 @@ object HabitItemsDB {
         habitItems.add(HabitItem("Ходить в бар","Ходить с друзьями в бар",3,false,2,"Раз в месяц",Color.YELLOW))
     }
 }
+
+enum class HabitsType {ALL,BAD,GOOD}
