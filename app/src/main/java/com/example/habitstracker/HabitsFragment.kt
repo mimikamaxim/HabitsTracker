@@ -30,7 +30,7 @@ class HabitsFragment(private val habitsType: HabitsType = HabitsType.ALL) : Frag
     private lateinit var binding: FragmentHabitsListBinding
     private val clickItemHandler = object : ClickItemHandler {
         override fun onClickItemHandler(view: View, id: Int) {
-            Log.i("TAGG", "item $id is ${HabitItemsDB.getHabit(id)}")
+            devDoSomeStuff { Log.i(TAG, "item $id is ${HabitItemsDB.getHabit(id)}") }
             val args: Bundle = Bundle()
             args.putInt(KEY_ID, id)
             findNavController().navigate(R.id.detailHabitFragment, args)
