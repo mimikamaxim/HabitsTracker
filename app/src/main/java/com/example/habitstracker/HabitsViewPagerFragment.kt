@@ -20,8 +20,10 @@ class HabitsViewPagerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHabitsViewPagerBinding.inflate(inflater,container,false)
+
         val viewPager: ViewPager2 = binding.habitsViewPager
         viewPager.adapter = ViewPagerHabitsAdapter(this)
+
         return binding.root
     }
 
@@ -32,6 +34,7 @@ class HabitsViewPagerFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             devDoSomeStuff{ Log.i(TAG,position.toString())}
+
             return when (position){
                 0 -> HabitsFragment(HabitsType.ALL)
                 1 -> HabitsFragment(HabitsType.BAD)

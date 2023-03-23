@@ -18,10 +18,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
+
         binding.homeStartBtn.setOnClickListener {
             devDoSomeStuff{ Log.i(TAG,"PRESSED") }
             findNavController().navigate(R.id.habitsViewPagerFragment)
         }
+
         return binding.root
     }
 }

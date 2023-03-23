@@ -1,16 +1,29 @@
 <resources>
-    <string name="app_name">Habits tracker</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_new_habit">Add new habit</string>
+<!--    placeholders-->
     <string name="dummy_text">Dummy text</string>
     <string name="dummy_title">Dummy title</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+<!--    titles-->
+    <string name="app_name">Habits tracker</string>
     <string name="about_title">About Habits tracker</string>
     <string name="detail_title">Habit detail</string>
     <string name="habits_list_title">Habits list</string>
+<!--    messages-->
     <string name="welcome_massage">Welcome to Habits tracker</string>
-    <string name="logo_content_description_text">Logo</string>
+    <string name="about_message">This app created to helps you track you habits. You can add and track you bad and good habits</string>
+    <string name="no_habit_title_err_message">Please enter habit name</string>
+    <string name="no_habit_description_err_message">Please enter habit description</string>
+    <string name="no_habit_done_amount_err_message">Please enter done count</string>
+    <string name="no_habit_periodic_err_message">Please enter periodic</string>
+<!--    text-->
     <string name="start_text">Start</string>
-    <string name="about_text">This app created to helps you track you habits. You can add and track you bad and good habits</string>
+    <string name="add_new_habit_text">Add new habit</string>
+    <string name="priority_text">Priority</string>
+    <string name="done_amount_text">Done</string>
+    <string name="period_text">Period</string>
+<!--    content descriptors-->
+    <string name="logo_content_description">Logo</string>
+<!--    arrays-->
     <string-array name="priority_values">
         <item>0</item>
         <item>1</item>

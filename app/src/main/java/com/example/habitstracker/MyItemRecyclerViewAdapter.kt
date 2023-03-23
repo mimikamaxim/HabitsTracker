@@ -1,6 +1,7 @@
 package com.example.habitstracker
 
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,11 +12,11 @@ import com.example.habitstracker.databinding.FragmentHabitsBinding
 
 class MyItemRecyclerViewAdapter(
     private val values: List<HabitItem>,
-    private val clickItemHandler: ClickItemHandler
+    private val clickItemHandler: ClickItemHandler,
+    private val context: Context
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         return ViewHolder(
             FragmentHabitsBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -30,9 +31,21 @@ class MyItemRecyclerViewAdapter(
         val item = values[position]
         holder.itemTitle.text = item.name
         holder.itemDescriptions.text = item.description
-        holder.itemPriority.text = "Приоритет: ${item.priority.toString()}"//TODO extract strings
-        holder.itemAmountDone.text = "Выполнено: ${item.amountDone}"
-        holder.itemPeriod.text = "Периодичность: ${item.period.toString()}"
+        holder.itemPriority.text = buildString {
+            append(context.getString(R.string.priority_text))
+            append(": ")
+            append(item.priority.toString())
+        }
+        holder.itemAmountDone.text = buildString {
+            append(context.getString(R.string.done_amount_text))
+            append(": ")
+            append(item.amountDone)
+        }
+        holder.itemPeriod.text = buildString {
+            append(context.getString(R.string.period_text))
+            append(": ")
+            append(item.period.toString())
+        }
         holder.itemColorAndIsGood.setColorFilter(item.color)
         if (item.isGood)
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_up_24)

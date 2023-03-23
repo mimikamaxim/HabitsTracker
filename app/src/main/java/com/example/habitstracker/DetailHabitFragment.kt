@@ -12,14 +12,18 @@ import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
 
+const val KEY_ID = "key_id"
+
 class DetailHabitFragment : Fragment() {
     private lateinit var binding: FragmentDetailHabitBinding
+    private var colorItem = Color.GRAY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailHabitBinding.inflate(inflater, container, false)//TODO q last?
+
         val idItem = arguments?.getIntOrNull(KEY_ID)
         idItem?.let {
             val habit = HabitItemsDB.getHabit(idItem)
@@ -31,7 +35,9 @@ class DetailHabitFragment : Fragment() {
                 habitDoneAmountEditText.setText(habit.amountDone.toString())
                 habitPeriodicEditText.setText(habit.period)
             }
+            colorItem = habit.color
         }
+
         binding.saveBtn.setOnClickListener {
             getHabitItem()?.let {
                 if (idItem == null)
@@ -41,34 +47,38 @@ class DetailHabitFragment : Fragment() {
                 findNavController().popBackStack(R.id.habitsViewPagerFragment, false)
             }
         }
+
         return binding.root
     }
 
     private fun getHabitItem(): HabitItem? {
         val name: String = binding.habitTitleEditText.text.toString()
         if (name.isEmpty()) {
-            makeToast("Введите название привычки")//TODO extract strings
+            makeToast(getString(R.string.no_habit_title_err_message))
             return null
         }
+
         val description: String = binding.habitDescriptionEditText.text.toString()
         if (description.isEmpty()) {
-            makeToast("Введите описание привычки")
+            makeToast(getString(R.string.no_habit_description_err_message))
             return null
         }
+
         val priority: Int = binding.habitPrioritySpinner.selectedItemPosition
         val isGood: Boolean = binding.radioGroup.checkedRadioButtonId == R.id.is_good
-        devDoSomeStuff { myLogger(binding.radioGroup.checkedRadioButtonId.toString()) }
         var amountDone: Int = 0
         if (binding.habitDoneAmountEditText.text.toString().isEmpty()) {
-            makeToast("Введите сколько раз сделано")
+            makeToast(getString(R.string.no_habit_done_amount_err_message))
             return null
         } else amountDone = binding.habitDoneAmountEditText.text.toString().toInt()
+
         val period: String = binding.habitPeriodicEditText.text.toString()
         if (period.isEmpty()) {
-            makeToast("Введите периодичность")
+            makeToast(getString(R.string.no_habit_periodic_err_message))
             return null
         }
-        val color: Int = Color.GRAY //TODO make color picker
+
+        val color: Int = colorItem //TODO make color picker
 
         return HabitItem(name, description, priority, isGood, amountDone, period, color)
     }

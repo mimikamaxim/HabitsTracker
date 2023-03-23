@@ -22,7 +22,7 @@ class HabitsFragment(private val habitsType: HabitsType = HabitsType.ALL) : Frag
     private val clickItemHandler = object : ClickItemHandler {
         override fun onClickItemHandler(view: View, id: Int) {
             devDoSomeStuff { Log.i(TAG, "item $id is ${HabitItemsDB.getHabit(id)}") }
-            val args: Bundle = Bundle()
+            val args = Bundle()
             args.putInt(KEY_ID, id)
             findNavController().navigate(R.id.detailHabitFragment, args)
         }
@@ -33,17 +33,21 @@ class HabitsFragment(private val habitsType: HabitsType = HabitsType.ALL) : Frag
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHabitsListBinding.inflate(inflater, container, false)
+
         with(binding.list) {
             adapter =
-                MyItemRecyclerViewAdapter(getRelevantList(habitsType), clickItemHandler)
+                MyItemRecyclerViewAdapter(getRelevantList(habitsType), clickItemHandler, context)
             layoutManager = LinearLayoutManager(context)
         }
+
         binding.newItem.setOnClickListener {
             findNavController().navigate(R.id.detailHabitFragment)
         }
+
         devDoSomeStuff {
             myLogger("list $habitsType RUN")
         }
+
         return binding.root
     }
 
