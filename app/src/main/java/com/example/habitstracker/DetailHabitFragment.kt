@@ -41,7 +41,7 @@ class DetailHabitFragment : Fragment() {
                     HabitItemsDB.addHabit(it)
                 else
                     HabitItemsDB.updateHabit(idItem, it)
-                findNavController().navigate(R.id.habitsViewPagerFragment)
+                findNavController().popBackStack(R.id.habitsViewPagerFragment, false)
             }
         }
         return binding.root
@@ -60,7 +60,7 @@ class DetailHabitFragment : Fragment() {
         }
         val priority: Int = binding.habitPrioritySpinner.selectedItemPosition
         val isGood: Boolean = binding.radioGroup.checkedRadioButtonId == R.id.is_good
-        Log.i("TAG4", binding.radioGroup.checkedRadioButtonId.toString())
+        devDoSomeStuff { myLogger(binding.radioGroup.checkedRadioButtonId.toString()) }
         var amountDone: Int = 0
         if (binding.habitDoneAmountEditText.text.toString().isEmpty()) {
             makeToast("Введите сколько раз сделано")

@@ -48,10 +48,10 @@ class HabitsFragment(private val habitsType: HabitsType = HabitsType.ALL) : Frag
             layoutManager = LinearLayoutManager(context)
         }
         binding.newItem.setOnClickListener {
-            findNavController().navigate(HabitsFragmentDirections.actionHabitsFragmentToDetailHabitFragment())
+            findNavController().navigate(R.id.detailHabitFragment)
         }
         devDoSomeStuff {
-            Log.i(TAG, "list $habitsType RUN")
+            myLogger("list $habitsType RUN")
         }
         return binding.root
     }

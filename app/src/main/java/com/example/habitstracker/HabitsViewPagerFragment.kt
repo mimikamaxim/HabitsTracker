@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.habitstracker.data.HabitsType
@@ -19,7 +21,7 @@ class HabitsViewPagerFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHabitsViewPagerBinding.inflate(inflater,container,false)
         val viewPager: ViewPager2 = binding.habitsViewPager
         viewPager.adapter = ViewPagerHabitsAdapter(this)
@@ -33,11 +35,11 @@ class HabitsViewPagerFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             devDoSomeStuff{ Log.i(TAG,position.toString())}
-            when (position){
-                0 -> return HabitsFragment(HabitsType.ALL)
-                1 -> return HabitsFragment(HabitsType.BAD)
-                2 -> return HabitsFragment(HabitsType.GOOD)
-                else -> return HomeFragment()
+            return when (position){
+                0 -> HabitsFragment(HabitsType.ALL)
+                1 -> HabitsFragment(HabitsType.BAD)
+                2 -> HabitsFragment(HabitsType.GOOD)
+                else -> HomeFragment()
             }
         }
     }
