@@ -15,36 +15,13 @@ import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailHabitFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailHabitFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private lateinit var binding: FragmentDetailHabitBinding
-
-//    override fun onCreate(savedInstanceState: Bundle?) { //TODO remove at final
-//        super.onCreate(savedInstanceState)
-//        Log.i("TAG1", arguments.toString())
-//        arguments?.let {
-//            param1 = it.getString("1")
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentDetailHabitBinding.inflate(inflater, container, false)//TODO q last?
         val idItem = arguments?.getIntOrNull(KEY_ID)
         idItem?.let {
@@ -64,7 +41,7 @@ class DetailHabitFragment : Fragment() {
                     HabitItemsDB.addHabit(it)
                 else
                     HabitItemsDB.updateHabit(idItem, it)
-                findNavController().navigate(R.id.habitsFragment)
+                findNavController().navigate(R.id.habitsViewPagerFragment)
             }
         }
         return binding.root
@@ -73,7 +50,7 @@ class DetailHabitFragment : Fragment() {
     private fun getHabitItem(): HabitItem? {
         val name: String = binding.habitTitleEditText.text.toString()
         if (name.isEmpty()) {
-            makeToast("Введите название привычки")
+            makeToast("Введите название привычки")//TODO extract strings
             return null
         }
         val description: String = binding.habitDescriptionEditText.text.toString()
@@ -101,26 +78,6 @@ class DetailHabitFragment : Fragment() {
 
     private fun makeToast(s: String) {
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailHabitFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailHabitFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 
     private fun android.os.Bundle.getIntOrNull(key: String): Int? {
