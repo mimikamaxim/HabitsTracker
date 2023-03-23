@@ -134,3 +134,14 @@ class DetailHabitFragment : Fragment() {
 }
  */
 //_________________________________________________________________________________________________
+//Drawer item listener
+//        navView.setNavigationItemSelectedListener{
+//            val id = it.itemId
+//            Log.i("TAG",it.toString())
+//            if (id == R.id.homeFragment)
+//                navController.navigate(R.id.homeFragment)
+//            if (id == R.id.aboutFragment)
+//                navController.navigate(R.id.aboutFragment)
+//            drawerLayout.close()
+//            true
+//        }
