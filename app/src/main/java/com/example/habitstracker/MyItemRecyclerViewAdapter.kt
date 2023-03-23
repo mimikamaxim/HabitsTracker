@@ -45,8 +45,8 @@ class MyItemRecyclerViewAdapter(
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_up_24)
         else
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_down_24)
-        holder.rootView.setOnClickListener {//TODO hand over id
-            clickItemHandler.onClickItemHandler(it,position)
+        holder.rootView.setOnClickListener {
+            clickItemHandler.onClickItemHandler(it,item.getID())
         }
     }
 

@@ -11,5 +11,5 @@ data class HabitItem(
     val color: Int,
     private val id: Int = -1
 ) {
-
+    fun getID() = id
 }

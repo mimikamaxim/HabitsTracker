@@ -9,21 +9,6 @@ object HabitItemsDB {
         return habitItems
     }
 
-    fun addHabit(habit: HabitItem) {
-        habitItems.add(
-            HabitItem(
-                habit.name,
-                habit.description,
-                habit.priority,
-                habit.isGood,
-                habit.amountDone,
-                habit.period,
-                habit.color,
-                habitItems.size
-            )
-        )
-    }
-
     fun getBadHabitItemsList(): List<HabitItem>{
         val list = mutableListOf<HabitItem>()
         habitItems.forEach {
@@ -38,6 +23,21 @@ object HabitItemsDB {
             if (it.isGood) list.add(it)
         }
         return list
+    }
+
+    fun addHabit(habit: HabitItem) {
+        habitItems.add(
+            HabitItem(
+                habit.name,
+                habit.description,
+                habit.priority,
+                habit.isGood,
+                habit.amountDone,
+                habit.period,
+                habit.color,
+                habitItems.size
+            )
+        )
     }
 
     fun getHabit(i: Int) = habitItems[i]
