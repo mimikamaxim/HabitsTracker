@@ -1,19 +1,12 @@
 package com.example.habitstracker
 
-import android.opengl.Visibility
-import androidx.recyclerview.widget.RecyclerView
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.data.HabitItem
-import com.example.habitstracker.data.HabitsType
-
-
-import com.example.habitstracker.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.habitstracker.databinding.FragmentHabitsBinding
 
 class MyItemRecyclerViewAdapter(

@@ -1,17 +1,11 @@
 package com.example.habitstracker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
-import androidx.core.view.forEach
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.navOptions
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.onNavDestinationSelected
 import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
