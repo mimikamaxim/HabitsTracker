@@ -42,8 +42,17 @@ object HabitItemsDB {
 
     fun getHabit(i: Int) = habitItems[i]
 
-    fun updateHabit(i: Int, habit: HabitItem) {
-        habitItems[i] = habit//TODO fix this
+    fun updateHabit(position: Int, habit: HabitItem) {
+        habitItems[position] = HabitItem(
+            habit.name,
+            habit.description,
+            habit.priority,
+            habit.isGood,
+            habit.amountDone,
+            habit.period,
+            habit.color,
+            position
+        )
     }
 
     fun fillDBsample() {
