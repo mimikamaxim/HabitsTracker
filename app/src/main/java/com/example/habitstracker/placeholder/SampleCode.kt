@@ -17,7 +17,7 @@ import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
 
-// TODO: Rename parameter arguments, choose names that match
+// TOODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -28,12 +28,12 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class DetailHabitFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    // TOODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding: FragmentDetailHabitBinding
 
-//    override fun onCreate(savedInstanceState: Bundle?) { //TODO remove at final
+//    override fun onCreate(savedInstanceState: Bundle?) { //TOODO remove at final
 //        super.onCreate(savedInstanceState)
 //        Log.i("TAG1", arguments.toString())
 //        arguments?.let {
@@ -47,7 +47,7 @@ class DetailHabitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentDetailHabitBinding.inflate(inflater, container, false)//TODO q last?
+        binding = FragmentDetailHabitBinding.inflate(inflater, container, false)
         val idItem = arguments?.getIntOrNull(KEY_ID)
         idItem?.let {
             val habit = HabitItemsDB.getHabit(idItem)
@@ -96,7 +96,7 @@ class DetailHabitFragment : Fragment() {
             makeToast("Введите периодичность")
             return null
         }
-        val color: Int = Color.GRAY //TODO make color picker
+        val color: Int = Color.GRAY
 
         return HabitItem(name, description, priority, isGood, amountDone, period, color)
     }
@@ -114,7 +114,7 @@ class DetailHabitFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment DetailHabitFragment.
          */
-        // TODO: Rename and change types and number of parameters
+        // TOODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             DetailHabitFragment().apply {
