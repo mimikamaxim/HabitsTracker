@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.presentation
 
 import android.graphics.Color
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.habitstracker.R
 import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding

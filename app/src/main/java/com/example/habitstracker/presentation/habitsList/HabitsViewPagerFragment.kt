@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.presentation.habitsList
 
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.example.habitstracker.data.HabitsType
+import com.example.habitstracker.TAG
+import com.example.habitstracker.data.HabitsListType
 import com.example.habitstracker.databinding.FragmentHabitsViewPagerBinding
+import com.example.habitstracker.devDoSomeStuff
+import com.example.habitstracker.presentation.HomeFragment
 
 private lateinit var binding: FragmentHabitsViewPagerBinding
 
@@ -36,9 +39,9 @@ class HabitsViewPagerFragment : Fragment() {
             devDoSomeStuff{ Log.i(TAG,position.toString())}
 
             return when (position){
-                0 -> HabitsFragment(HabitsType.ALL)
-                1 -> HabitsFragment(HabitsType.BAD)
-                2 -> HabitsFragment(HabitsType.GOOD)
+                0 -> HabitsFragment(HabitsListType.ALL)
+                1 -> HabitsFragment(HabitsListType.BAD)
+                2 -> HabitsFragment(HabitsListType.GOOD)
                 else -> HomeFragment()
             }
         }

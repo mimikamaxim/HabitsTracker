@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,8 +6,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.habitstracker.R
 import com.example.habitstracker.data.HabitItemsDB
 import com.example.habitstracker.databinding.ActivityMainBinding
+import com.example.habitstracker.devDoSomeStuff
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {

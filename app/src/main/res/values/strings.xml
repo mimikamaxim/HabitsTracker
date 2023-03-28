@@ -16,6 +16,12 @@
     <string name="no_habit_done_amount_err_message">Please enter done count</string>
     <string name="no_habit_periodic_err_message">Please enter periodic</string>
 <!--    text-->
+    <string name="habit_title_text">Habit name</string>
+    <string name="habit_description_text">Habit description</string>
+    <string name="habit_type_text">Habit type</string>
+    <string name="good_text">Good</string>
+    <string name="bad_text">Bad</string>
+    <string name="save_text">Save</string>
     <string name="start_text">Start</string>
     <string name="add_new_habit_text">Add new habit</string>
     <string name="priority_text">Priority</string>
@@ -29,7 +35,5 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
-        <item>4</item>
-        <item>5</item>
     </string-array>
 </resources>

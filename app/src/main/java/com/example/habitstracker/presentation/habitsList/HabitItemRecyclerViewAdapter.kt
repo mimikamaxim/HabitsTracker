@@ -1,4 +1,4 @@
-package com.example.habitstracker
+package com.example.habitstracker.presentation.habitsList
 
 
 import android.content.Context
@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.habitstracker.R
 import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.databinding.FragmentHabitsBinding
 
-class MyItemRecyclerViewAdapter(
+class HabitItemRecyclerViewAdapter(
     private val values: List<HabitItem>,
     private val clickItemHandler: ClickItemHandler,
     private val context: Context
-) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
