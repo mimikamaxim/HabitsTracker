@@ -145,3 +145,33 @@ class DetailHabitFragment : Fragment() {
 //            drawerLayout.close()
 //            true
 //        }
+
+//_________________________________________________________________________________________________
+//ViewModels
+//private val viewModel: DetailHabitFragmentViewModel by viewModels { ViewModelFactory(arguments) }
+////    private lateinit var viewModel: DetailHabitFragmentViewModel
+//
+//private class ViewModelFactory(private val arguments: Bundle?) :
+//    ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        return DetailHabitFragmentViewModel(arguments?.getIntOrNull(KEY_ID)) as T
+//    }
+//}
+//
+////    override fun onCreate(savedInstanceState: Bundle?) {
+////        super.onCreate(savedInstanceState)
+////        viewModel = ViewModelProvider(this,object : ViewModelProvider.Factory {
+////            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+////                return DetailHabitFragmentViewModel(arguments?.getIntOrNull(KEY_ID)) as T
+////            }
+////        }).get(DetailHabitFragmentViewModel::class.java)
+////    }
+
+//_________________________________________________________________________________________________
+//private val _name: MutableLiveData<String> = MutableLiveData()
+//    private val _description: MutableLiveData<String> = MutableLiveData()
+//    private val _priority: MutableLiveData<Int> = MutableLiveData()
+//    private val _isGood: MutableLiveData<Boolean> = MutableLiveData()
+//    private val _amountDone: MutableLiveData<Int> = MutableLiveData()
+//    private val _period: MutableLiveData<String> = MutableLiveData()
+//    private val _color: MutableLiveData<Int> = MutableLiveData()
