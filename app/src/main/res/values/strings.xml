@@ -29,7 +29,11 @@
     <string name="period_text">Period</string>
 <!--    content descriptors-->
     <string name="logo_content_description">Logo</string>
-<!--    arrays-->
+    <string name="pull_up_to_see_filters_text">Pull up to see filters</string>
+    <string name="type_here_to_filter_by_name_text">Type here to filter by name</string>
+    <string name="sort_by_name_text">Sort by name</string>
+    <string name="sort_by_add_order_text">Sort by add order</string>
+    <!--    arrays-->
     <string-array name="priority_values">
         <item>0</item>
         <item>1</item>

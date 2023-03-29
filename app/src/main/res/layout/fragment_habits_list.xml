@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.example.habitstracker.HabitsFragment"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        tools:context=".presentation.habitsList.HabitsFragment"
-        tools:listitem="@layout/fragment_habits" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.example.habitstracker.HabitsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:context=".presentation.habitsList.HabitsFragment"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/fragment_habits" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/habits_list_bottom_sheet"
+        android:id="@+id/bottom_sheet"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/new_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/float_button_layout_margin"
-        android:layout_marginBottom="@dimen/float_button_layout_margin"
+        android:layout_margin="@dimen/float_button_layout_margin"
         android:clickable="true"
         android:contentDescription="@string/add_new_habit_text"
         android:focusable="true"
         android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_anchor="@id/bottom_sheet"
+        app:layout_anchorGravity="top|end" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
