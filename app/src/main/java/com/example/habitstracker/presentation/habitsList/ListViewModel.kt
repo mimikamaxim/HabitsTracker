@@ -15,18 +15,18 @@ class ListViewModel(listType: HabitsListType = HabitsListType.ALL): ViewModel() 
     init {
         _list.value = when (listType){
             HabitsListType.ALL -> HabitItemsDB.getHabitItemsList()
-            HabitsListType.BAD -> HabitsListFilter.getBadHabitItemsList()
-            HabitsListType.GOOD -> HabitsListFilter.getGoodHabitItemsList()
+            HabitsListType.BAD -> HabitsListFilter.filterBadHabit(HabitItemsDB.getHabitItemsList())
+            HabitsListType.GOOD -> HabitsListFilter.filterGoodHabit(HabitItemsDB.getHabitItemsList())
         }
         originalList = list.value!!
     }
 
     fun findByHabitName (request: String){
-        _list.value = HabitsListFilter.findByHabitName(request,originalList)
+        _list.value = HabitsListFilter.filterHabitName(request,originalList)
     }
 
     fun findInHabitDescription (request: String){
-        _list.value = HabitsListFilter.findInHabitDescription(request,originalList)
+        _list.value = HabitsListFilter.filterHabitDescription(request,originalList)
     }
 
     fun sortByHabitName() {

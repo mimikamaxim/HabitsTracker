@@ -3,23 +3,23 @@ package com.example.habitstracker.data
 import java.util.*
 
 object HabitsListFilter {
-    fun getBadHabitItemsList(): List<HabitItem> {
+    fun filterBadHabit(originalList: List<HabitItem>): List<HabitItem> {
         val list = mutableListOf<HabitItem>()
-        HabitItemsDB.getHabitItemsList().forEach {
+        originalList.forEach {
             if (!it.isGood) list.add(it)
         }
         return list
     }
 
-    fun getGoodHabitItemsList(): List<HabitItem> {
+    fun filterGoodHabit(originalList: List<HabitItem>): List<HabitItem> {
         val list = mutableListOf<HabitItem>()
-        HabitItemsDB.getHabitItemsList().forEach {
+        originalList.forEach {
             if (it.isGood) list.add(it)
         }
         return list
     }
 
-    fun findByHabitName(request: String, originalList: List<HabitItem>): List<HabitItem> {
+    fun filterHabitName(request: String, originalList: List<HabitItem>): List<HabitItem> {
         val list = mutableListOf<HabitItem>()
         if (request.isEmpty()) return originalList
         originalList.forEach {
@@ -31,7 +31,7 @@ object HabitsListFilter {
         return list
     }
 
-    fun findInHabitDescription(request: String, originalList: List<HabitItem>): List<HabitItem> {
+    fun filterHabitDescription(request: String, originalList: List<HabitItem>): List<HabitItem> {
         val list = mutableListOf<HabitItem>()
         if (request.isEmpty()) return originalList
         originalList.forEach {
