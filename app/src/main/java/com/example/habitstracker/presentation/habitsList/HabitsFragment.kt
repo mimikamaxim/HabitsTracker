@@ -14,9 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habitstracker.R
 import com.example.habitstracker.TAG
-import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.data.HabitItemsDB
-import com.example.habitstracker.data.HabitsListFilter
 import com.example.habitstracker.data.HabitsListType
 import com.example.habitstracker.databinding.FragmentHabitsListBinding
 import com.example.habitstracker.devDoSomeStuff
@@ -75,7 +73,7 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
 
         binding.bottomSheet.sortByNameBtn.setOnClickListener { viewModel.sortByHabitName() }
 
-        binding.bottomSheet.sortByDefaultBtn.setOnClickListener { viewModel.setDefaultList() }
+        binding.bottomSheet.sortByDefaultBtn.setOnClickListener { viewModel.sortByHabitId() }
 
         return binding.root
     }

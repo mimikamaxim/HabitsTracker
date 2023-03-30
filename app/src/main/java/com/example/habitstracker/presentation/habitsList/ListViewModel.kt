@@ -33,7 +33,7 @@ class ListViewModel(listType: HabitsListType = HabitsListType.ALL): ViewModel() 
         _list.value = HabitsListFilter.sortByHabitName(list.value!!)
     }
 
-    fun setDefaultList(){
+    fun sortByHabitId(){
         _list.value = HabitsListFilter.sortByHabitId(list.value!!)
     }
 }
