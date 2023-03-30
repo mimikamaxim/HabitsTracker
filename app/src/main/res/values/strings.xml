@@ -31,6 +31,7 @@
     <string name="type_here_to_filter_by_name_text">Type here to filter by name</string>
     <string name="sort_by_name_text">Sort by name</string>
     <string name="sort_by_add_order_text">Sort by add order</string>
+    <string name="all_text">All</string>
     <!--    content descriptors-->
     <string name="logo_content_description">Logo</string>
     <!--    arrays-->

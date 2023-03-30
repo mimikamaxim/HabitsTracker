@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.habitstracker.R
 import com.example.habitstracker.TAG
 import com.example.habitstracker.data.HabitsListType
 import com.example.habitstracker.databinding.FragmentHabitsViewPagerBinding
 import com.example.habitstracker.devDoSomeStuff
 import com.example.habitstracker.presentation.HomeFragment
+import com.google.android.material.tabs.TabLayoutMediator
 
 private lateinit var binding: FragmentHabitsViewPagerBinding
 
@@ -26,6 +28,16 @@ class HabitsViewPagerFragment : Fragment() {
 
         val viewPager: ViewPager2 = binding.habitsViewPager
         viewPager.adapter = ViewPagerHabitsAdapter(this)
+
+        val tabLayout = binding.habitsViewPagerTabLayout
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.all_text)
+                1 -> getString(R.string.good_text)
+                2 -> getString(R.string.bad_text)
+                else -> "none"
+            }
+        }.attach()
 
         return binding.root
     }
