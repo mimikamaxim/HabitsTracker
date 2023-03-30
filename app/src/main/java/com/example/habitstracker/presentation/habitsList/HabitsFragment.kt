@@ -66,9 +66,19 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
             findNavController().navigate(R.id.detailHabitFragment)
         }
 
-        binding.bottomSheet.filterTextInputEditText.doOnTextChanged { text, start, before, count ->
-            viewModel.findByHabitName(text.toString())
+        binding.bottomSheet.filterNameTextInputEditText.doOnTextChanged { text, start, before, count ->
+            if (binding.bottomSheet.filterNameTextInputEditText.isFocused) {
+                viewModel.findByHabitName(text.toString())
+                binding.bottomSheet.filterDescriptionTextInputEditText.setText("")
+            }
             myLogger(text.toString())
+        }
+
+        binding.bottomSheet.filterDescriptionTextInputEditText.doOnTextChanged { text, start, before, count ->
+            if (binding.bottomSheet.filterDescriptionTextInputEditText.isFocused) {
+                viewModel.findInHabitDescription(text.toString())
+                binding.bottomSheet.filterNameTextInputEditText.setText("")
+            }
         }
 
         binding.bottomSheet.sortByNameBtn.setOnClickListener { viewModel.sortByHabitName() }

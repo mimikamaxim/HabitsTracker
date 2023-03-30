@@ -28,7 +28,8 @@
     <string name="done_amount_text">Done</string>
     <string name="period_text">Period</string>
     <string name="pull_up_to_see_filters_text">Pull up to see filters</string>
-    <string name="type_here_to_filter_by_name_text">Type here to filter by name</string>
+    <string name="type_here_to_filter_by_name_text">Type here to find by name</string>
+    <string name="type_here_to_find_in_description_text">Type here to find in description</string>
     <string name="sort_by_name_text">Sort by name</string>
     <string name="sort_by_add_order_text">Sort by add order</string>
     <string name="all_text">All</string>
