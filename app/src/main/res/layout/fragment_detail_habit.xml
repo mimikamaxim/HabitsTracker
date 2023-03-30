@@ -11,14 +11,19 @@
         android:layout_height="wrap_content"
         android:text="@string/habit_title_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/default_margin"/>
 
     <EditText
         android:id="@+id/habit_title_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
         android:autofillHints="@string/habit_title_text"
         android:ems="12"
+        android:hint="@string/habit_title_text"
+        android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,14 +35,19 @@
         android:layout_height="wrap_content"
         android:text="@string/habit_description_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_title_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_title_edit_text"
+        android:layout_margin="@dimen/default_margin"/>
 
     <EditText
         android:id="@+id/habit_description_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
         android:autofillHints="@string/habit_description_text"
         android:ems="12"
+        android:hint="@string/habit_description_text"
+        android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,13 +59,16 @@
         android:layout_height="wrap_content"
         android:text="@string/priority_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_description_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_description_edit_text"
+        android:layout_margin="@dimen/default_margin"/>
 
     <Spinner
         android:id="@+id/habit_priority_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
         android:entries="@array/priority_values"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_priority" />
 
@@ -65,14 +78,16 @@
         android:layout_height="wrap_content"
         android:text="@string/habit_type_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_priority_spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_priority_spinner"
+        android:layout_margin="@dimen/default_margin"/>
 
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_type">
+        app:layout_constraintTop_toBottomOf="@+id/habit_type"
+        android:layout_margin="@dimen/default_margin">
 
         <RadioButton
             android:id="@+id/is_good"
@@ -94,15 +109,19 @@
         android:layout_height="wrap_content"
         android:text="@string/done_amount_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        android:layout_margin="@dimen/default_margin"/>
 
     <EditText
         android:id="@+id/habit_done_amount_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:autofillHints="1"
         android:ems="4"
+        android:hint="@string/done_amount_text"
         android:inputType="number"
-        android:text="1"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_done_amount" />
 
@@ -112,15 +131,19 @@
         android:layout_height="wrap_content"
         android:text="@string/period_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_done_amount_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/habit_done_amount_edit_text"
+        android:layout_margin="@dimen/default_margin"/>
 
     <EditText
         android:id="@+id/habit_periodic_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin"
+        android:autofillHints="One per week"
         android:ems="12"
+        android:hint="@string/period_text"
         android:inputType="textPersonName"
-        android:text="Раз в неделю"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/habit_periodic" />
 
@@ -131,6 +154,7 @@
         android:text="@string/save_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="@dimen/default_margin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

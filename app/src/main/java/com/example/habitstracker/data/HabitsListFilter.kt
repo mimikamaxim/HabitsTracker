@@ -35,7 +35,9 @@ object HabitsListFilter {
         val list = mutableListOf<HabitItem>()
         if (request.isEmpty()) return originalList
         originalList.forEach {
-            if (it.description.contains(request))
+            if (it.description.lowercase(Locale.getDefault())
+                    .contains(request.lowercase(Locale.getDefault()))
+            )
                 list.add(it)
         }
         return list
