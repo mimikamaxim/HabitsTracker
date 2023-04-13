@@ -1,5 +1,6 @@
 package com.example.habitstracker.presentation
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.habitstracker.R
-import com.example.habitstracker.data.HabitItem
+import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
+import com.example.habitstracker.myLogger
 
 
 const val KEY_ID = "key_id"
@@ -21,12 +24,16 @@ const val KEY_ID = "key_id"
 class DetailHabitFragment : Fragment() {
     private lateinit var binding: FragmentDetailHabitBinding
     private var colorItem = Color.GRAY
-    private val viewModel: DetailHabitFragmentViewModel by viewModels { ViewModelFactory(arguments) }
+    private val viewModel: DetailHabitFragmentViewModel by viewModels { ViewModelFactory(arguments, requireContext(), this) }
 
-    private class ViewModelFactory(private val arguments: Bundle?) :
+    private class ViewModelFactory(
+        private val arguments: Bundle?,
+        private val context: Context,
+        private val lifecycleOwner: LifecycleOwner
+    ) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return DetailHabitFragmentViewModel(arguments?.getIntOrNull(KEY_ID)) as T
+            return DetailHabitFragmentViewModel(arguments?.getIntOrNull(KEY_ID),context,lifecycleOwner) as T
         }
     }
 
@@ -43,11 +50,6 @@ class DetailHabitFragment : Fragment() {
             }
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.habit.observe(viewLifecycleOwner) {
             it?.let {
                 with(binding) {
@@ -61,9 +63,15 @@ class DetailHabitFragment : Fragment() {
                 colorItem = it.color
             }
         }
+
+        return binding.root
     }
 
-    private fun getHabitItem(): HabitItem? {
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//    }
+
+    private fun getHabitItem(): HabitItemPresentationModel? {
         val name: String = binding.habitTitleEditText.text.toString()
         if (name.isEmpty()) {
             makeToast(getString(R.string.no_habit_title_err_message))
@@ -92,7 +100,15 @@ class DetailHabitFragment : Fragment() {
 
         val color: Int = colorItem //TODO make color picker
 
-        return HabitItem(name, description, priority, isGood, amountDone, period, color)
+        return HabitItemPresentationModel(
+            name,
+            description,
+            priority,
+            isGood,
+            amountDone,
+            period,
+            color
+        )
     }
 
     private fun makeToast(s: String) {

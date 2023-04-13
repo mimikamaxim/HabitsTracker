@@ -175,3 +175,9 @@ class DetailHabitFragment : Fragment() {
 //    private val _amountDone: MutableLiveData<Int> = MutableLiveData()
 //    private val _period: MutableLiveData<String> = MutableLiveData()
 //    private val _color: MutableLiveData<Int> = MutableLiveData()
+
+//        if (id!=null) {
+//            HabitItemsDB.updateHabit(id, habitItemPresentationModel)
+//        } else {
+//            HabitItemsDB.addHabit(habitItemPresentationModel)
+//        }

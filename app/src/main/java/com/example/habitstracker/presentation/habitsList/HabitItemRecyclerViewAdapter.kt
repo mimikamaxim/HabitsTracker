@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.R
-import com.example.habitstracker.data.HabitItem
 import com.example.habitstracker.databinding.FragmentHabitsBinding
 
 class HabitItemRecyclerViewAdapter(
-    private val values: List<HabitItem>,
+    private val values: List<HabitItemPresentationModel>,
     private val clickItemHandler: ClickItemHandler,
     private val context: Context
 ) : RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>() {
@@ -53,7 +52,7 @@ class HabitItemRecyclerViewAdapter(
         else
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_down_24)
         holder.rootView.setOnClickListener {
-            clickItemHandler.onClickItemHandler(it,item.getID())
+            clickItemHandler.onClickItemHandler(it, item.getID())
         }
     }
 

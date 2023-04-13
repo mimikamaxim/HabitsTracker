@@ -10,7 +10,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.habitstracker.R
 import com.example.habitstracker.TAG
-import com.example.habitstracker.data.HabitsListType
 import com.example.habitstracker.databinding.FragmentHabitsViewPagerBinding
 import com.example.habitstracker.devDoSomeStuff
 import com.example.habitstracker.presentation.HomeFragment
@@ -33,8 +32,8 @@ class HabitsViewPagerFragment : Fragment() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.all_text)
-                1 -> getString(R.string.good_text)
-                2 -> getString(R.string.bad_text)
+                1 -> getString(R.string.bad_text)
+                2 -> getString(R.string.good_text)
                 else -> "none"
             }
         }.attach()

@@ -1,7 +1,7 @@
-package com.example.habitstracker.data
+package com.example.habitstracker.presentation.habitsList
 
 
-data class HabitItem(
+data class HabitItemPresentationModel(
     val name: String,
     val description: String,
     val priority: Int,
@@ -12,7 +12,7 @@ data class HabitItem(
     private val id: Int = -1
 ) {
     fun getID():Int {
-        if (id==-1) throw Exception("id of habit is was not set correctly")
+        if (id==-1) throw Exception("id of habit was not set correctly")
         return id
     }
 }

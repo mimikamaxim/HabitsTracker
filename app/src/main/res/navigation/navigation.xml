@@ -28,7 +28,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.habitstracker.presentation.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_habitsViewPagerFragment"
+            app:destination="@id/habitsViewPagerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/habitsViewPagerFragment"
         android:name="com.example.habitstracker.presentation.habitsList.HabitsViewPagerFragment"

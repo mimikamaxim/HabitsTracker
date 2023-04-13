@@ -1,5 +1,7 @@
 package com.example.habitstracker.presentation
 
+import android.content.ContentProvider
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -30,12 +32,18 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        devDoSomeStuff { HabitItemsDB.fillDBsample() }
+        contextBase = baseContext
+
+//        devDoSomeStuff { HabitItemsDB.fillDBsample() }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.navHostFragment)
 
         return NavigationUI.navigateUp(navController, drawerLayout)
+    }
+
+    companion object{
+        var contextBase:Context? = null
     }
 }
