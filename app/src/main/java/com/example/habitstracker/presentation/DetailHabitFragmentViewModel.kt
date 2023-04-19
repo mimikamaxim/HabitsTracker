@@ -1,30 +1,44 @@
 package com.example.habitstracker.presentation
 
-import android.content.Context
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.os.Bundle
+import androidx.lifecycle.*
+import com.example.habitstracker.domain.Interaction
 import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
-import com.example.habitstracker.domain.Converter
-//import com.example.habitstracker.domain.ConverterFactory
+import kotlinx.coroutines.launch
 
-class DetailHabitFragmentViewModel(val id: Int?, context: Context, lifecycleOwner: LifecycleOwner): ViewModel() {
+class DetailHabitFragmentViewModel(val id: Int?) : ViewModel() {
+    class ViewModelFactory(
+        private val arguments: Bundle?
+    ) :
+        ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return DetailHabitFragmentViewModel(arguments?.getIntOrNull(KEY_ID)) as T
+        }
+
+        private fun android.os.Bundle.getIntOrNull(key: String): Int? {
+            return if (this.containsKey(key))
+                this.getInt(key)
+            else
+                null
+        }
+    }
+
     private val _habit: MutableLiveData<HabitItemPresentationModel?> = MutableLiveData()
     val habit: LiveData<HabitItemPresentationModel?> = _habit
 
-//    val converter: Converter = ConverterFactory(context).getInstance()
-    val converter = Converter
     init {
-        if (id!=null) _habit.value = converter.getPresentationHabit(id)
-        else _habit.value = null
+        viewModelScope.launch {
+            if (id != null) _habit.value = Interaction.getPresentationHabit(id)
+            else _habit.value = null
+        }
     }
 
     fun saveHabit (habitItemPresentationModel: HabitItemPresentationModel) {
-        if (id!=null) {
-            converter.updateHabitFromPresentation(habitItemPresentationModel, id)
+        if (id != null) {
+            Interaction.updateHabitFromPresentation(habitItemPresentationModel)
         } else {
-            converter.addNewHabitFromPresentation(habitItemPresentationModel)
+            Interaction.addNewHabitFromPresentation(habitItemPresentationModel)
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.habitstracker.data
 
 import androidx.annotation.WorkerThread
-import androidx.lifecycle.LiveData
 import com.example.habitstracker.data.room.HabitEntity
 import com.example.habitstracker.data.room.HabitsDAO
 import kotlinx.coroutines.flow.Flow
@@ -30,5 +29,10 @@ class HabitsRepository(private val habitsDAO: HabitsDAO) {
     @WorkerThread
     suspend fun update(habitEntity: HabitEntity) {
         habitsDAO.update(habitEntity)
+    }
+
+
+    suspend fun getItem(id: Int): HabitEntity {
+        return habitsDAO.getItem(id)
     }
 }

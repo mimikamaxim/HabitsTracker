@@ -11,8 +11,12 @@ data class HabitItemPresentationModel(
     val color: Int,
     private val id: Int = -1
 ) {
-    fun getID():Int {
-        if (id==-1) throw Exception("id of habit was not set correctly")
+    fun getID(): Int {
+        if (id == -1) throw Exception("id of habit was not set correctly")
         return id
+    }
+
+    companion object {
+        const val NewId = -2
     }
 }

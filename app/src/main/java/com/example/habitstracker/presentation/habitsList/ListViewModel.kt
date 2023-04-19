@@ -1,50 +1,54 @@
 package com.example.habitstracker.presentation.habitsList
 
-import android.content.Context
-import android.util.Log
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.habitstracker.domain.Converter
-//import com.example.habitstracker.domain.ConverterFactory
-import com.example.habitstracker.myLogger
+import androidx.lifecycle.*
+import com.example.habitstracker.domain.Interaction
+import kotlinx.coroutines.launch
 
-class ListViewModel(listType: HabitsListType = HabitsListType.ALL, context: Context, lifecycleOwner: LifecycleOwner): ViewModel() {
+class ListViewModel(
+    listType: HabitsListType = HabitsListType.ALL
+) : ViewModel() {
+    class ViewModelFactory( //todo? in class or out
+        private val habitsListType: HabitsListType
+    ) :
+        ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return ListViewModel(habitsListType) as T
+        }
+    }
 
     private var originalList = listOf<HabitItemPresentationModel>()
     private val _list: MutableLiveData<List<HabitItemPresentationModel>> = MutableLiveData()
     val list: LiveData<List<HabitItemPresentationModel>> = _list
-//    val converter: Converter = ConverterFactory(context).getInstance()
-    val converter = Converter
-    val converterList = converter.presentationList
+
+    private val presentationList = Interaction.getPresentationList()
+
     init {
-        converterList.observe(lifecycleOwner){
-            Log.i("LIST",converterList.value.toString())
-            _list.value = when (listType){
-                HabitsListType.ALL -> it
-                HabitsListType.BAD -> HabitsListFilter.filterBadHabit(it)
-                HabitsListType.GOOD -> it//HabitsListFilter.filterGoodHabit(it)
+        viewModelScope.launch {
+            presentationList.collect {
+                _list.value = when (listType) {
+                    HabitsListType.ALL -> it
+                    HabitsListType.BAD -> HabitsListFilter.filterBadHabit(it)
+                    HabitsListType.GOOD -> HabitsListFilter.filterGoodHabit(it)
+                }
+                originalList = list.value!!
             }
-            originalList = list.value!!
         }
-        myLogger("VM list init $listType")
     }
 
-    fun findByHabitName (request: String){
-        _list.value = HabitsListFilter.filterHabitName(request,originalList)
+    fun findByHabitName(request: String) {
+        _list.value = HabitsListFilter.filterHabitName(request, originalList)
     }
 
-    fun findInHabitDescription (request: String){
-        _list.value = HabitsListFilter.filterHabitDescription(request,originalList)
+    fun findInHabitDescription(request: String) {
+        _list.value = HabitsListFilter.filterHabitDescription(request, originalList)
     }
 
     fun sortByHabitName() {
         _list.value = HabitsListFilter.sortByHabitName(list.value!!)
     }
 
-    fun sortByHabitId(){
+    fun sortByHabitId() {
         _list.value = HabitsListFilter.sortByHabitId(list.value!!)
     }
 }

@@ -1,6 +1,5 @@
 package com.example.habitstracker.presentation.habitsList
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,6 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habitstracker.R
@@ -19,6 +15,7 @@ import com.example.habitstracker.myLogger
 import com.example.habitstracker.presentation.KEY_ID
 
 interface ClickItemHandler {
+    //todo? location of interface
     fun onClickItemHandler(view: View, id: Int)
 }
 
@@ -26,23 +23,15 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
     private lateinit var binding: FragmentHabitsListBinding
     private val clickItemHandler = object : ClickItemHandler {
         override fun onClickItemHandler(view: View, id: Int) {
-//            devDoSomeStuff { Log.i(TAG, "item $id is ${HabitItemsDB.getHabit(id)}") }
             val args = Bundle()
             args.putInt(KEY_ID, id)
             findNavController().navigate(R.id.detailHabitFragment, args)
         }
     }
-    private val viewModel: ListViewModel by viewModels { ViewModelFactory(habitsListType,requireContext(),this) }
-
-    private class ViewModelFactory(
-        private val habitsListType: HabitsListType,
-        private val context: Context,
-        private val lifecycleOwner: LifecycleOwner
-    ) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return ListViewModel(habitsListType, context,lifecycleOwner) as T
-        }
+    private val viewModel: ListViewModel by viewModels {
+        ListViewModel.ViewModelFactory(
+            habitsListType
+        )
     }
 
     override fun onCreateView(
@@ -67,7 +56,7 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
             findNavController().navigate(R.id.detailHabitFragment)
         }
 
-        binding.bottomSheet.filterNameTextInputEditText.doOnTextChanged { text, start, before, count ->
+        binding.bottomSheet.filterNameTextInputEditText.doOnTextChanged { text, _, _, _ ->
             if (binding.bottomSheet.filterNameTextInputEditText.isFocused) {
                 viewModel.findByHabitName(text.toString())
                 binding.bottomSheet.filterDescriptionTextInputEditText.setText("")
@@ -75,7 +64,7 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
             myLogger(text.toString())
         }
 
-        binding.bottomSheet.filterDescriptionTextInputEditText.doOnTextChanged { text, start, before, count ->
+        binding.bottomSheet.filterDescriptionTextInputEditText.doOnTextChanged { text, _, _, _ ->
             if (binding.bottomSheet.filterDescriptionTextInputEditText.isFocused) {
                 viewModel.findInHabitDescription(text.toString())
                 binding.bottomSheet.filterNameTextInputEditText.setText("")
