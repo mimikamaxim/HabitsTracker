@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsBinding
+import com.example.habitstracker.presentation.HabitItemPresentationModel
 
 class HabitItemRecyclerViewAdapter(
     private val values: List<HabitItemPresentationModel>,

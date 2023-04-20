@@ -1,8 +1,8 @@
 package com.example.habitstracker.domain
 
 import com.example.habitstracker.data.room.HabitEntity
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel.Companion.NewId
+import com.example.habitstracker.presentation.HabitItemPresentationModel
+import com.example.habitstracker.presentation.HabitItemPresentationModel.Companion.NoId
 
 object Mapper {
 
@@ -36,7 +36,7 @@ object Mapper {
             habit.amountDone,
             habit.period,
             habit.color,
-            if (habit.getID() == NewId) null else habit.getID()
+            if (habit.getID() == NoId) null else habit.getID()
         )
     }
 }

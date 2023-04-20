@@ -69,6 +69,14 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
 
+    //Net components
+    // Добавляем зависимость для Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    // Добавляем зависимость для конвертера JSON в объекты Kotlin
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    // Добавляем зависимость для OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
 //    def lifecycle_version = "2.6.1"
 //    def arch_version = "2.2.0"
 //

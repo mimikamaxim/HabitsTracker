@@ -1,4 +1,4 @@
-package com.example.habitstracker.presentation.habitsList
+package com.example.habitstracker.presentation
 
 
 data class HabitItemPresentationModel(
@@ -17,6 +17,6 @@ data class HabitItemPresentationModel(
     }
 
     companion object {
-        const val NewId = -2
+        const val NoId = -2
     }
 }

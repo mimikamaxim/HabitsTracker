@@ -1,7 +1,7 @@
 package com.example.habitstracker.data
 
 import android.graphics.Color
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
+import com.example.habitstracker.presentation.HabitItemPresentationModel
 
 object HabitItemsDB {
     private val habitItems = mutableListOf<HabitItemPresentationModel>()

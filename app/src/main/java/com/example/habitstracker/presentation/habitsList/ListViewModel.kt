@@ -2,6 +2,7 @@ package com.example.habitstracker.presentation.habitsList
 
 import androidx.lifecycle.*
 import com.example.habitstracker.domain.Interaction
+import com.example.habitstracker.presentation.HabitItemPresentationModel
 import kotlinx.coroutines.launch
 
 class ListViewModel(

@@ -3,7 +3,6 @@ package com.example.habitstracker.presentation
 import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.habitstracker.domain.Interaction
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
 import kotlinx.coroutines.launch
 
 class DetailHabitFragmentViewModel(val id: Int?) : ViewModel() {

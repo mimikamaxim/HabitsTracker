@@ -3,8 +3,8 @@ package com.example.habitstracker.domain
 import com.example.habitstracker.data.HabitsRepository
 import com.example.habitstracker.data.room.HabitEntity
 import com.example.habitstracker.data.room.HabitsRoomDatabase
+import com.example.habitstracker.presentation.HabitItemPresentationModel
 import com.example.habitstracker.presentation.MainActivity
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

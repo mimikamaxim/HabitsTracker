@@ -11,8 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel
-import com.example.habitstracker.presentation.habitsList.HabitItemPresentationModel.Companion.NewId
+import com.example.habitstracker.presentation.HabitItemPresentationModel.Companion.NoId
 
 
 const val KEY_ID = "key_id"
@@ -90,7 +89,7 @@ class DetailHabitFragment : Fragment() {
             amountDone,
             period,
             color,
-            viewModel.id ?: NewId
+            viewModel.id ?: NoId
         )
     }
 
