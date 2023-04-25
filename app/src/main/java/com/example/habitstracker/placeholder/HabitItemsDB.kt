@@ -1,4 +1,4 @@
-package com.example.habitstracker.data
+package com.example.habitstracker.placeholder
 
 import android.graphics.Color
 import com.example.habitstracker.presentation.HabitItemPresentationModel

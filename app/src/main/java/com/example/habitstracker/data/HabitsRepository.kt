@@ -3,13 +3,16 @@ package com.example.habitstracker.data
 import androidx.annotation.WorkerThread
 import com.example.habitstracker.data.room.HabitEntity
 import com.example.habitstracker.data.room.HabitsDAO
+import com.example.habitstracker.domain.IHabitsRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
-class HabitsRepository(private val habitsDAO: HabitsDAO) {
+class HabitsRepository(private val habitsDAO: HabitsDAO) : IHabitsRepository {
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
@@ -22,17 +25,17 @@ class HabitsRepository(private val habitsDAO: HabitsDAO) {
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(habitEntity: HabitEntity) {
-        habitsDAO.insert(habitEntity)
+    override suspend fun insert(habitEntity: HabitEntity) {
+        withContext(Dispatchers.IO) { habitsDAO.insert(habitEntity) }
     }
 
     @WorkerThread
-    suspend fun update(habitEntity: HabitEntity) {
-        habitsDAO.update(habitEntity)
+    override suspend fun update(habitEntity: HabitEntity) {
+        withContext(Dispatchers.IO) { habitsDAO.update(habitEntity) }
     }
 
 
-    suspend fun getItem(id: Int): HabitEntity {
-        return habitsDAO.getItem(id)
+    override suspend fun getItem(id: Int): HabitEntity {
+        return withContext(Dispatchers.IO) { habitsDAO.getItem(id) }
     }
 }

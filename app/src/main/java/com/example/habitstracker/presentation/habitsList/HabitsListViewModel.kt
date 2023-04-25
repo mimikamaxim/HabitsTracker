@@ -1,22 +1,16 @@
 package com.example.habitstracker.presentation.habitsList
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.habitstracker.domain.Interaction
 import com.example.habitstracker.presentation.HabitItemPresentationModel
 import kotlinx.coroutines.launch
 
-class ListViewModel(
+class HabitsListViewModel(
     listType: HabitsListType = HabitsListType.ALL
 ) : ViewModel() {
-    class ViewModelFactory( //todo? in class or out
-        private val habitsListType: HabitsListType
-    ) :
-        ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return ListViewModel(habitsListType) as T
-        }
-    }
 
     private var originalList = listOf<HabitItemPresentationModel>()
     private val _list: MutableLiveData<List<HabitItemPresentationModel>> = MutableLiveData()

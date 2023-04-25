@@ -4,7 +4,7 @@ import com.example.habitstracker.data.room.HabitEntity
 import com.example.habitstracker.presentation.HabitItemPresentationModel
 import com.example.habitstracker.presentation.HabitItemPresentationModel.Companion.NoId
 
-object Mapper {
+internal object Mapper {
 
     fun dataListToPresentationList(dataList: List<HabitEntity>): List<HabitItemPresentationModel> {
         val result = mutableListOf<HabitItemPresentationModel>()

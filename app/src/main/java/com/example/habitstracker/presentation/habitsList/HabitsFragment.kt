@@ -14,11 +14,6 @@ import com.example.habitstracker.databinding.FragmentHabitsListBinding
 import com.example.habitstracker.myLogger
 import com.example.habitstracker.presentation.KEY_ID
 
-interface ClickItemHandler {
-    //todo? location of interface
-    fun onClickItemHandler(view: View, id: Int)
-}
-
 class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType.ALL) : Fragment() {
     private lateinit var binding: FragmentHabitsListBinding
     private val clickItemHandler = object : ClickItemHandler {
@@ -28,29 +23,45 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
             findNavController().navigate(R.id.detailHabitFragment, args)
         }
     }
-    private val viewModel: ListViewModel by viewModels {
-        ListViewModel.ViewModelFactory(
+    private val viewModel: HabitsListViewModel by viewModels {
+        HabitsListViewModelFactory(
             habitsListType
         )
     }
+
+    var adapter: HabitItemRecyclerViewAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHabitsListBinding.inflate(inflater, container, false)
+        adapter =
+            HabitItemRecyclerViewAdapter(
+                viewModel.list.value ?: emptyList(),
+                clickItemHandler,
+                requireContext()
+            )
+
+        with(binding.list) {
+            adapter = this@HabitsFragment.adapter
+            layoutManager = LinearLayoutManager(context)
+        }
 
         viewModel.list.observe(viewLifecycleOwner) {
-            with(binding.list) {
-                adapter =
-                    HabitItemRecyclerViewAdapter(
-                        it,
-                        clickItemHandler,
-                        context
-                    )
-                layoutManager = LinearLayoutManager(context)
-            }
+            adapter?.updateList(it)
         }
+//        viewModel.list.observe(viewLifecycleOwner) {
+//            with(binding.list) {
+//                adapter =
+//                    HabitItemRecyclerViewAdapter(
+//                        viewModel.list.value ?: emptyList(),
+//                        clickItemHandler,
+//                        context
+//                    )
+//                layoutManager = LinearLayoutManager(context)
+//            }
+//        }
 
         binding.newItem.setOnClickListener {
             findNavController().navigate(R.id.detailHabitFragment)
@@ -76,5 +87,9 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
         binding.bottomSheet.sortByDefaultBtn.setOnClickListener { viewModel.sortByHabitId() }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 }

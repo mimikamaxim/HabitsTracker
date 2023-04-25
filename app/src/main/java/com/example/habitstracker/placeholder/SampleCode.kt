@@ -14,7 +14,7 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.navigation.fragment.findNavController
 import com.example.habitstracker.data.HabitItem
-import com.example.habitstracker.data.HabitItemsDB
+import com.example.habitstracker.placeholder.HabitItemsDB
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
 
 // TOODO: Rename parameter arguments, choose names that match
@@ -181,3 +181,38 @@ class DetailHabitFragment : Fragment() {
 //        } else {
 //            HabitItemsDB.addHabit(habitItemPresentationModel)
 //        }
+
+//____________________APP
+//    val database by lazy { HabitsRoomDatabase.getDatabase(this) }
+//    val repository by lazy { HabitsRepository(database.habitsDAO()) }
+
+//__INTR
+//    private val repository = HabitsApplication().getRepository()
+//class HabitsApplication : Application() {
+////    private fun createRepository(){
+////        database = HabitsRoomDatabase.getDatabase(this)
+////        repository = HabitsRepository(database!!.habitsDAO())
+//////        return repository!!
+////    }
+//
+//    //    fun getRepo():HabitsRepository{
+////        if (repository!=null) return repository!!
+////        else {
+////            createRepository()
+////            return repository!!
+////        }
+////    }
+//    init {
+//        context = baseContext
+//    }
+//
+//    companion object{
+//        val applicationScope = CoroutineScope(SupervisorJob())
+//        var context: Context? = null
+////        private var database: HabitsRoomDatabase? = null
+////        var repository: HabitsRepository? = null
+//    }
+//    val database by lazy { HabitsRoomDatabase.getDatabase(this) }
+//    val repository by lazy { HabitsRepository(database.habitsDAO()) }
+//    val applicationScope = CoroutineScope(SupervisorJob())
+//}

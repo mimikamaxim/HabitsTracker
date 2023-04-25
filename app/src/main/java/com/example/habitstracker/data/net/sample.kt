@@ -3,6 +3,7 @@ package com.example.habitstracker.data.net
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -12,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 // Создаем интерфейс для определения методов API
-interface ApiService {
+interface ApiServiceMy {
     // Аннотация @GET указывает, что запрос будет типа GET
     // В скобках указываем конечный путь к ресурсу
     @GET("posts")
@@ -40,11 +41,11 @@ val retrofit = Retrofit.Builder()
     .build()
 
 // Создаем объект apiService для доступа к методам API
-val apiService = retrofit.create(ApiService::class.java)
+val apiServiceMy = retrofit.create(ApiServiceMy::class.java)
 
 fun test () {
 // Выполняем асинхронный запрос к серверу для получения списка постов
-    apiService.getPosts().enqueue(object : Callback<List<Post>> {
+    apiServiceMy.getPosts().enqueue(object : Callback<List<Post>> {
         // Обрабатываем успешный ответ от сервера
         override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
             // Проверяем, что ответ не пустой и содержит данные
@@ -98,7 +99,56 @@ fun retryRequest(call: Call<List<Post>>, retries: Int) {
         }
     })
 }
+
 fun test2() {
     // Вызываем функцию retryRequest с объектом call и числом попыток, например, 3
-    retryRequest(apiService.getPosts(), 3)
+    retryRequest(apiServiceMy.getPosts(), 3)
+}
+
+// Создаем функцию getPostsAsync, которая возвращает объект Deferred, который содержит список постов
+fun getPostsAsync(): Deferred<List<Post>> {
+    // Возвращаем результат выполнения асинхронной корутины
+    return GlobalScope.async {
+        // Создаем объект response, который хранит ответ от сервера
+        val response = apiServiceMy.getPosts().execute()
+        // Проверяем, что ответ не пустой и содержит данные
+        if (response.isSuccessful && response.body() != null) {
+            // Возвращаем список постов из тела ответа
+            response.body()!!
+        } else {
+            // Бросаем исключение с сообщением об ошибке
+            throw Exception(response.message())
+        }
+    }
+}
+
+// Создаем функцию retryRequest, которая принимает число retries
+suspend fun retryRequest(retries: Int) {
+    // Обрабатываем возможные исключения при выполнении запроса
+    try {
+        // Вызываем функцию getPostsAsync и ожидаем получения результата
+        val posts = getPostsAsync().await()
+        // Делаем что-то с полученными данными, например, выводим в лог
+        Log.d("RetrofitExample", "Posts: $posts")
+    } catch (e: Exception) {
+        // Выводим сообщение об ошибке в лог
+        Log.e("RetrofitExample", "Error: ${e.message}")
+        // Проверяем, что число попыток не исчерпано
+        if (retries > 0) {
+            // Задаем промежуток времени для повтора запроса в миллисекундах
+            val delay = 5000L
+            // Выводим сообщение о повторе запроса в лог
+            Log.d("RetrofitExample", "Retrying request in $delay ms")
+            // Запускаем функцию retryRequest с уменьшенным числом попыток через заданный промежуток времени
+            delay(delay)
+            retryRequest(retries - 1)
+        }
+    }
+}
+
+fun test3() {
+// Запускаем корутину на главном потоке для выполнения запроса к серверу с числом попыток, например, 3
+    GlobalScope.launch(Dispatchers.Main) {
+        retryRequest(3)
+    }
 }

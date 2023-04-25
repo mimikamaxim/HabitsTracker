@@ -12,10 +12,15 @@ import com.example.habitstracker.databinding.FragmentHabitsBinding
 import com.example.habitstracker.presentation.HabitItemPresentationModel
 
 class HabitItemRecyclerViewAdapter(
-    private val values: List<HabitItemPresentationModel>,
+    private var values: List<HabitItemPresentationModel>,
     private val clickItemHandler: ClickItemHandler,
     private val context: Context
 ) : RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>() {
+
+    fun updateList(list: List<HabitItemPresentationModel>) {
+        values = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
