@@ -23,12 +23,22 @@ object Interaction {
 
     fun addNewHabitFromPresentation(habit: HabitItemPresentationModel) {
         applicationScope.launch {
-//            repositorySQL.insert(Mapper.presentationHabitToDataEntity(habit,null))
+            repositorySQL.insert(Mapper.presentationHabitToDataEntity(habit, null))
             val uid = repositoryNet.uploadNewHabit(Mapper.presentationToNewNet(habit))
-//            val id = repositorySQL.getItem()
-            repositorySQL.insert(Mapper.presentationHabitToDataEntity(habit, uid))
-//            Log.e("FU", uid)
-//            repositorySQL.update(Mapper.presentationHabitToDataEntity(habit, uid))
+            val ourHabit = repositorySQL.getLastItem()
+            repositorySQL.update(
+                HabitEntity(
+                    ourHabit.name,
+                    ourHabit.description,
+                    ourHabit.priority,
+                    ourHabit.isGood,
+                    ourHabit.amountDone,
+                    ourHabit.period,
+                    ourHabit.color,
+                    ourHabit.id,
+                    uid
+                )
+            )
         }
     }
 

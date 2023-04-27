@@ -38,4 +38,8 @@ class HabitsRepository(private val habitsDAO: HabitsDAO) : IHabitsRepository {
     override suspend fun getItem(id: Int): HabitEntity {
         return withContext(Dispatchers.IO) { habitsDAO.getItem(id) }
     }
+
+    fun getLastItem(): HabitEntity {
+        return habitsDAO.getLastItem()
+    }
 }

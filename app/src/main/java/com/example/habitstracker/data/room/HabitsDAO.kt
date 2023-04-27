@@ -39,4 +39,11 @@ interface HabitsDAO {
 
     @Query("DELETE FROM habits_table")
     suspend fun deleteAll()
+
+    @Query(
+        "SELECT * FROM habits_table\n" +
+                "ORDER BY id DESC\n" +
+                "LIMIT 1;\n"
+    )
+    fun getLastItem(): HabitEntity
 }
