@@ -6,12 +6,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.habitstracker.devDoSomeStuff
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
-@Database(entities = [HabitEntity::class], version = 1)
+@Database(entities = [HabitEntity::class], version = 2)
 abstract class HabitsRoomDatabase : RoomDatabase() {
 
     abstract fun habitsDAO(): HabitsDAO
@@ -54,13 +52,13 @@ abstract class HabitsRoomDatabase : RoomDatabase() {
                 super.onCreate(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-                devDoSomeStuff {
-                    INSTANCE?.let { database ->
-                        scope.launch(Dispatchers.IO) {
-                            populateDatabase(database.habitsDAO())
-                        }
-                    }
-                }
+//                devDoSomeStuff {
+//                    INSTANCE?.let { database ->
+//                        scope.launch(Dispatchers.IO) {
+//                            populateDatabase(database.habitsDAO())
+//                        }
+//                    }
+//                }
             }
         }
 

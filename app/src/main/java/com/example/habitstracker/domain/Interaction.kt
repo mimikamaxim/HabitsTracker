@@ -2,6 +2,7 @@ package com.example.habitstracker.domain
 
 import com.example.habitstracker.HabitsApplication.Companion.applicationScope
 import com.example.habitstracker.data.HabitsRepository
+import com.example.habitstracker.data.net.NetRepository
 import com.example.habitstracker.data.room.HabitEntity
 import com.example.habitstracker.data.room.HabitsRoomDatabase
 import com.example.habitstracker.presentation.HabitItemPresentationModel
@@ -12,8 +13,9 @@ import kotlinx.coroutines.launch
 
 object Interaction {
     val database by lazy { HabitsRoomDatabase.getDatabase(MainActivity.contextBase!!) }
-    val repository by lazy { HabitsRepository(database.habitsDAO()) }
-    private val dataList: Flow<List<HabitEntity>> = repository.listHabits
+    val repositorySQL by lazy { HabitsRepository(database.habitsDAO()) }
+    val repositoryNet = NetRepository()
+    private val dataList: Flow<List<HabitEntity>> = repositorySQL.listHabits
 
     fun getPresentationList() = dataList.map { list ->
         Mapper.dataListToPresentationList(list)
@@ -21,18 +23,26 @@ object Interaction {
 
     fun addNewHabitFromPresentation(habit: HabitItemPresentationModel) {
         applicationScope.launch {
-            repository.insert(Mapper.presentationHabitToDataEntity(habit))
+//            repositorySQL.insert(Mapper.presentationHabitToDataEntity(habit,null))
+            val uid = repositoryNet.uploadNewHabit(Mapper.presentationToNewNet(habit))
+//            val id = repositorySQL.getItem()
+            repositorySQL.insert(Mapper.presentationHabitToDataEntity(habit, uid))
+//            Log.e("FU", uid)
+//            repositorySQL.update(Mapper.presentationHabitToDataEntity(habit, uid))
         }
     }
 
     fun updateHabitFromPresentation(habit: HabitItemPresentationModel) {
         applicationScope.launch {
-            repository.update(Mapper.presentationHabitToDataEntity(habit))
+            val sqlHabit = repositorySQL.getItem(habit.getID())
+            val uid = sqlHabit.uid!!
+            repositorySQL.update(Mapper.presentationHabitToDataEntity(habit, uid))
+            repositoryNet.updateHabit(Mapper.presentationToNet(habit, uid))
         }
     }
 
     suspend fun getPresentationHabit(id: Int): HabitItemPresentationModel {
-        val habit = repository.getItem(id)
+        val habit = repositorySQL.getItem(id)
         return Mapper.dataEntityToPresentationModel(habit)
     }
 }

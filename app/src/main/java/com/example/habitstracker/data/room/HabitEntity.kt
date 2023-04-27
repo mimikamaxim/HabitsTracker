@@ -13,5 +13,6 @@ data class HabitEntity(
     @ColumnInfo val amountDone: Int,
     @ColumnInfo val period: String,
     @ColumnInfo val color: Int,
-    @PrimaryKey(true) val id: Int? = null
+    @PrimaryKey(true) val id: Int? = null,
+    @ColumnInfo var uid: String? = null
 )
