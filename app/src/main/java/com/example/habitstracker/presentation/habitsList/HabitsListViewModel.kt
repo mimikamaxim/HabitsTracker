@@ -9,14 +9,17 @@ import com.example.habitstracker.presentation.HabitItemPresentationModel
 import kotlinx.coroutines.launch
 
 class HabitsListViewModel(
-    listType: HabitsListType = HabitsListType.ALL
+    listType: HabitsListType = HabitsListType.ALL,
+    interaction: Interaction
 ) : ViewModel() {
 
     private var originalList = listOf<HabitItemPresentationModel>()
     private val _list: MutableLiveData<List<HabitItemPresentationModel>> = MutableLiveData()
     val list: LiveData<List<HabitItemPresentationModel>> = _list
+//    @Inject
+//    lateinit var interaction : Interaction
 
-    private val presentationList = Interaction.getPresentationList()
+    private val presentationList = interaction.getPresentationList()
 
     init {
         viewModelScope.launch {

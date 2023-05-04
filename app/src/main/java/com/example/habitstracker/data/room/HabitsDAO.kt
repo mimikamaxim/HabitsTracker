@@ -17,33 +17,33 @@ interface HabitsDAO {
     // The flow always holds/caches latest version of data. Notifies its observers when the
     // data has changed.
     @Query("SELECT * FROM habits_table")
-    fun getHabitsList(): Flow<List<HabitEntity>>
+    fun getHabitsList(): Flow<List<HabitSQLEntity>>
 
     @Query("SELECT * FROM habits_table WHERE isGood = false")
-    fun getBadHabitsList(): Flow<List<HabitEntity>>
+    fun getBadHabitsList(): Flow<List<HabitSQLEntity>>
 
     @Query("SELECT * FROM habits_table WHERE isGood = true")
-    fun getGoodHabitsList(): Flow<List<HabitEntity>>
+    fun getGoodHabitsList(): Flow<List<HabitSQLEntity>>
 
     @Query("SELECT * FROM habits_table WHERE id = :id")
-    suspend fun getItem(id: Int): HabitEntity
+    suspend fun getItem(id: Int): HabitSQLEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(habitEntity: HabitEntity)
+    suspend fun insert(habitSQLEntity: HabitSQLEntity)
 
     @Update
-    suspend fun update(habitEntity: HabitEntity)
+    suspend fun update(habitSQLEntity: HabitSQLEntity)
 
     @Delete
-    suspend fun delete(habitEntity: HabitEntity)
+    suspend fun delete(habitSQLEntity: HabitSQLEntity)
 
     @Query("DELETE FROM habits_table")
     suspend fun deleteAll()
 
-    @Query(
+    @Query(//TODO sql hints??
         "SELECT * FROM habits_table\n" +
                 "ORDER BY id DESC\n" +
                 "LIMIT 1;\n"
     )
-    fun getLastItem(): HabitEntity
+    fun getLastItem(): HabitSQLEntity
 }

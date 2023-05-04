@@ -36,3 +36,4 @@ fun main() {
 //        netInt.addDoneDate(2,"0b23236f-d74f-4cad-a5d8-d3126c9a300a")
     }
 }
+//val testResult = listOf<Int>(1,2,3)

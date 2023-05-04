@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.habitstracker.HabitsApplication
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsListBinding
+import com.example.habitstracker.domain.Interaction
 import com.example.habitstracker.myLogger
 import com.example.habitstracker.presentation.KEY_ID
+import javax.inject.Inject
 
 class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType.ALL) : Fragment() {
     private lateinit var binding: FragmentHabitsListBinding
@@ -23,9 +26,20 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
             findNavController().navigate(R.id.detailHabitFragment, args)
         }
     }
+
+    @Inject
+    lateinit var interaction: Interaction
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val appComponent = (requireActivity().application as HabitsApplication).appComponent
+        appComponent.inject(this)
+//        HabitsApplication.appComponent.inject(this)
+    }
+
     private val viewModel: HabitsListViewModel by viewModels {
         HabitsListViewModelFactory(
-            habitsListType
+            habitsListType,
+            interaction
         )
     }
 

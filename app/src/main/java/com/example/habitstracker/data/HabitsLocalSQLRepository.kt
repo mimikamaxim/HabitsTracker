@@ -1,9 +1,9 @@
 package com.example.habitstracker.data
 
 import androidx.annotation.WorkerThread
-import com.example.habitstracker.data.room.HabitEntity
+import com.example.habitstracker.data.room.HabitSQLEntity
 import com.example.habitstracker.data.room.HabitsDAO
-import com.example.habitstracker.domain.IHabitsRepository
+import com.example.habitstracker.domain.IHabitsSQLRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -12,11 +12,11 @@ import kotlinx.coroutines.withContext
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
-class HabitsRepository(private val habitsDAO: HabitsDAO) : IHabitsRepository {
+class HabitsLocalSQLRepository(private val habitsDAO: HabitsDAO) : IHabitsSQLRepository {
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    override val listHabits: Flow<List<HabitEntity>> = habitsDAO.getHabitsList()
+    override val listHabits: Flow<List<HabitSQLEntity>> = habitsDAO.getHabitsList()
 //    val listBadHabits = habitsDAO.getBadHabitsList()
 //    val listGoodHabits = habitsDAO.getGoodHabitsList()
 
@@ -25,21 +25,21 @@ class HabitsRepository(private val habitsDAO: HabitsDAO) : IHabitsRepository {
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    override suspend fun insert(habitEntity: HabitEntity) {
-        withContext(Dispatchers.IO) { habitsDAO.insert(habitEntity) }
+    override suspend fun insert(habitSQLEntity: HabitSQLEntity) {
+        withContext(Dispatchers.IO) { habitsDAO.insert(habitSQLEntity) }
     }
 
     @WorkerThread
-    override suspend fun update(habitEntity: HabitEntity) {
-        withContext(Dispatchers.IO) { habitsDAO.update(habitEntity) }
+    override suspend fun update(habitSQLEntity: HabitSQLEntity) {
+        withContext(Dispatchers.IO) { habitsDAO.update(habitSQLEntity) }
     }
 
 
-    override suspend fun getItem(id: Int): HabitEntity {
+    override suspend fun getItem(id: Int): HabitSQLEntity {
         return withContext(Dispatchers.IO) { habitsDAO.getItem(id) }
     }
 
-    fun getLastItem(): HabitEntity {
+    override suspend fun getLastItem(): HabitSQLEntity {
         return habitsDAO.getLastItem()
     }
 }

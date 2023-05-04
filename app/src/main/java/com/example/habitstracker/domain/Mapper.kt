@@ -2,13 +2,13 @@ package com.example.habitstracker.domain
 
 import com.example.habitstracker.data.net.entity.NetHabitEntity
 import com.example.habitstracker.data.net.entity.NetNewHabitEntity
-import com.example.habitstracker.data.room.HabitEntity
+import com.example.habitstracker.data.room.HabitSQLEntity
 import com.example.habitstracker.presentation.HabitItemPresentationModel
 import com.example.habitstracker.presentation.HabitItemPresentationModel.Companion.NoId
 
 internal object Mapper {
 
-    fun dataListToPresentationList(dataList: List<HabitEntity>): List<HabitItemPresentationModel> {
+    fun dataListToPresentationList(dataList: List<HabitSQLEntity>): List<HabitItemPresentationModel> {
         val result = mutableListOf<HabitItemPresentationModel>()
         dataList.forEach {
             result.add(dataEntityToPresentationModel(it))
@@ -16,24 +16,24 @@ internal object Mapper {
         return result
     }
 
-    fun dataEntityToPresentationModel(habitEntity: HabitEntity): HabitItemPresentationModel {
+    fun dataEntityToPresentationModel(habitSQLEntity: HabitSQLEntity): HabitItemPresentationModel {
         return HabitItemPresentationModel(
-            habitEntity.name,
-            habitEntity.description,
-            habitEntity.priority,
-            habitEntity.isGood,
-            habitEntity.amountDone,
-            habitEntity.period,
-            habitEntity.color,
-            habitEntity.id ?: throw Exception("No ID for element from base")
+            habitSQLEntity.title,
+            habitSQLEntity.description,
+            habitSQLEntity.priority,
+            habitSQLEntity.isGood,
+            habitSQLEntity.amountDone,
+            habitSQLEntity.period,
+            habitSQLEntity.color,
+            habitSQLEntity.id ?: throw Exception("No ID for element from base")
         )
     }
 
     fun presentationHabitToDataEntity(
         habit: HabitItemPresentationModel,
         uid: String?
-    ): HabitEntity {
-        return HabitEntity(
+    ): HabitSQLEntity {
+        return HabitSQLEntity(
             habit.name,
             habit.description,
             habit.priority,

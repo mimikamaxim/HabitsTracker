@@ -9,9 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.habitstracker.HabitsApplication
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
+import com.example.habitstracker.domain.Interaction
 import com.example.habitstracker.presentation.HabitItemPresentationModel.Companion.NoId
+import javax.inject.Inject
 
 
 const val KEY_ID = "key_id"
@@ -19,8 +22,21 @@ const val KEY_ID = "key_id"
 class DetailHabitFragment : Fragment() {
     private lateinit var binding: FragmentDetailHabitBinding
     private var colorItem = Color.GRAY
+
+    @Inject
+    lateinit var interaction: Interaction
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val appComponent = (requireActivity().application as HabitsApplication).appComponent
+        appComponent.inject(this)
+//        HabitsApplication.appComponent.inject(this)//todo mark
+    }
+
     private val viewModel: DetailHabitFragmentViewModel by viewModels {
-        DetailHabitFragmentViewModel.ViewModelFactory(arguments)
+        DetailHabitFragmentViewModel.ViewModelFactory(
+            arguments,
+            interaction
+        )
     }
 
     override fun onCreateView(

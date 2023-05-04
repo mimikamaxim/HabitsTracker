@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
-@Database(entities = [HabitEntity::class], version = 2)
+@Database(entities = [HabitSQLEntity::class], version = 4)
 abstract class HabitsRoomDatabase : RoomDatabase() {
 
     abstract fun habitsDAO(): HabitsDAO
@@ -71,7 +71,7 @@ abstract class HabitsRoomDatabase : RoomDatabase() {
             // Not needed if you only populate on creation.
             habitsDAO.deleteAll()
             habitsDAO.insert(
-                HabitEntity(
+                HabitSQLEntity(
                     "Читать новости",
                     "Читать свежие новости",
                     2,
@@ -82,7 +82,7 @@ abstract class HabitsRoomDatabase : RoomDatabase() {
                 )
             )
             habitsDAO.insert(
-                HabitEntity(
+                HabitSQLEntity(
 
                     "Физические упражнения",
                     "Заниматься физической нагрузкой в течении часа",
@@ -94,7 +94,7 @@ abstract class HabitsRoomDatabase : RoomDatabase() {
                 )
             )
             habitsDAO.insert(
-                HabitEntity(
+                HabitSQLEntity(
                     "Магазин",
                     "Ходить за продуктами",
                     3,
@@ -105,7 +105,7 @@ abstract class HabitsRoomDatabase : RoomDatabase() {
                 )
             )
             habitsDAO.insert(
-                HabitEntity(
+                HabitSQLEntity(
                     "Уборка",
                     "Прибраться в комнате",
                     1,
@@ -116,7 +116,7 @@ abstract class HabitsRoomDatabase : RoomDatabase() {
                 )
             )
             habitsDAO.insert(
-                HabitEntity(
+                HabitSQLEntity(
                     "Ходить в бар",
                     "Ходить с друзьями в бар",
                     3,
