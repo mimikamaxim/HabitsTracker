@@ -24,12 +24,6 @@ annotation class ApplicationContext
 @Singleton
 interface AppComponent {
 
-    //    @Component.Builder
-//    interface Builder {
-//        @BindsInstance
-//        fun application(application: Application): Builder
-//        fun build(): AppComponent
-//    }
     fun inject(interaction: Interaction)
     fun inject(habitsApplication: HabitsApplication)
     fun inject(detailHabitFragmentViewModel: DetailHabitFragmentViewModel)
@@ -37,43 +31,28 @@ interface AppComponent {
     fun inject(detailHabitFragment: DetailHabitFragment)
     fun inject(habitsFragment: HabitsFragment)
 
-    //    @Component.Builder
-//    interface Builder {
-//        @BindsInstance
-//        fun application(application: Application): Builder
-//        fun build(): AppComponent
-//    }
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance application: Application): AppComponent
-//        fun getComponent(): AppComponent
     }
 }
 
 @Module()
 object SQL_RoomRepository {
     @Provides
-    fun getRepository(@ApplicationContext context: Context): HabitsLocalSQLRepository {
-        val database by lazy { HabitsRoomDatabase.getDatabase(context) }
-        val repositorySQL by lazy { HabitsLocalSQLRepository(database.habitsDAO()) }
-//        Shared()
-        return repositorySQL
+    fun getRepository(database: HabitsRoomDatabase): HabitsLocalSQLRepository {
+        return HabitsLocalSQLRepository(database.habitsDAO())
     }
 
     @Provides
-    fun getInteraction(repo: HabitsLocalSQLRepository): Interaction {
-        return Interaction(repo)
+    fun getInteraction(repository: HabitsLocalSQLRepository): Interaction {
+        return Interaction(repository)
     }
 
-//    @Module
-//    abstract class {
-//        @Binds// сделать абстрактный модуль
-//        fun bindRepo(imp): interface
-//    }
-
-
-//    @Provides
-//    fun getn
+    @Provides
+    fun getDatabase(@ApplicationContext context: Context): HabitsRoomDatabase {
+        return HabitsRoomDatabase.getDatabase(context)
+    }
 }
 
 @Module
