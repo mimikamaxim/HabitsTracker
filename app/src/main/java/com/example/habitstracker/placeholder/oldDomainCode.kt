@@ -39,7 +39,7 @@ package com.example.habitstracker.placeholder
 //                            it.description,
 //                            it.priority,
 //                            it.isGood,
-//                            it.amountDone,
+//                            it.periodInDays,
 //                            it.period,
 //                            it.color,
 //                            it.id ?: throw Exception("no ID")
@@ -65,7 +65,7 @@ package com.example.habitstracker.placeholder
 //                    it.description,
 //                    it.priority,
 //                    it.isGood,
-//                    it.amountDone,
+//                    it.periodInDays,
 //                    it.period,
 //                    it.color,
 //                    it.id ?: throw Exception("no ID")
@@ -77,3 +77,24 @@ package com.example.habitstracker.placeholder
 //    private val _presentationList: MutableLiveData<MutableList<HabitItemPresentationModel>> =
 //        MutableLiveData()
 //    val presentationList: LiveData<MutableList<HabitItemPresentationModel>> = _presentationList
+
+//    val repositorySQL = Helper.repositorySQL
+//    val database by lazy { HabitsRoomDatabase.getDatabase(MainActivity.contextBase!!) }
+//    val repositorySQL by lazy { HabitsLocalSQLRepository(database.habitsDAO()) }
+//    @Inject
+//    lateinit var repositorySQL: HabitsLocalSQLRepository
+//    var repositorySQL1: HabitsLocalSQLRepository? =null
+//    var repositorySQL: HabitsLocalSQLRepository
+
+//    init {
+//        HabitsApplication.appComponent.inject(this)
+//        repositorySQL = repositorySQL1!!
+//    }
+
+//    init {
+//        val daggerComponent = DaggerAppComponent
+//            .builder()
+//            .build()//todo как инжектить в поле если нет application
+//        daggerComponent.inject(this)
+////        HabitsApplication.appComponent.inject(this)
+//    }

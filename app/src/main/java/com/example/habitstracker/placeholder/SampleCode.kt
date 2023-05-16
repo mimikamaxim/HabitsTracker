@@ -56,7 +56,7 @@ class DetailHabitFragment : Fragment() {
                 habitDescriptionEditText.setText(habit.description)
                 habitPrioritySpinner.setSelection(habit.priority)
                 if (habit.isGood) radioGroup.check(R.id.is_good) else radioGroup.check(R.id.is_bad)
-                habitDoneAmountEditText.setText(habit.amountDone.toString())
+                habitDoneAmountEditText.setText(habit.periodInDays.toString())
                 habitPeriodicEditText.setText(habit.period)
             }
         }
@@ -86,11 +86,11 @@ class DetailHabitFragment : Fragment() {
         val priority: Int = binding.habitPrioritySpinner.selectedItemPosition
         val isGood: Boolean = binding.radioGroup.checkedRadioButtonId == R.id.is_good
         Log.i("TAG4", binding.radioGroup.checkedRadioButtonId.toString())
-        var amountDone: Int = 0
+        var periodInDays: Int = 0
         if (binding.habitDoneAmountEditText.text.toString().isEmpty()) {
             makeToast("Введите сколько раз сделано")
             return null
-        } else amountDone = binding.habitDoneAmountEditText.text.toString().toInt()
+        } else periodInDays = binding.habitDoneAmountEditText.text.toString().toInt()
         val period: String = binding.habitPeriodicEditText.text.toString()
         if (period.isEmpty()) {
             makeToast("Введите периодичность")
@@ -98,7 +98,7 @@ class DetailHabitFragment : Fragment() {
         }
         val color: Int = Color.GRAY
 
-        return HabitItem(name, description, priority, isGood, amountDone, period, color)
+        return HabitItem(name, description, priority, isGood, periodInDays, period, color)
     }
 
     private fun makeToast(s: String) {

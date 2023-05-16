@@ -45,12 +45,12 @@ class HabitItemRecyclerViewAdapter(
         holder.itemAmountDone.text = buildString {
             append(context.getString(R.string.done_amount_text))
             append(": ")
-            append(item.amountDone)
+            append(item.periodInDays)
         }
         holder.itemPeriod.text = buildString {
             append(context.getString(R.string.period_text))
             append(": ")
-            append(item.period.toString())
+            append(item.frequencyOfAllowedExecutions.toString())
         }
         holder.itemColorAndIsGood.setColorFilter(item.color)
         if (item.isGood)

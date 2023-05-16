@@ -18,14 +18,16 @@ internal object Mapper {
 
     fun dataEntityToPresentationModel(habitSQLEntity: HabitSQLEntity): HabitItemPresentationModel {
         return HabitItemPresentationModel(
-            habitSQLEntity.title,
-            habitSQLEntity.description,
-            habitSQLEntity.priority,
-            habitSQLEntity.isGood,
-            habitSQLEntity.amountDone,
-            habitSQLEntity.period,
-            habitSQLEntity.color,
-            habitSQLEntity.id ?: throw Exception("No ID for element from base")
+            name = habitSQLEntity.name,
+            description = habitSQLEntity.description,
+            priority = habitSQLEntity.priority,
+            isGood = habitSQLEntity.isGood,
+            color = habitSQLEntity.color,
+            frequencyOfAllowedExecutions = habitSQLEntity.frequencyOfAllowedExecutions,
+            periodInDays = habitSQLEntity.periodInDays,
+            doneDates = habitSQLEntity.doneDates,
+            initialDate = habitSQLEntity.initialDate,
+            id = habitSQLEntity.id ?: throw Exception("No ID for element from base")
         )
     }
 
@@ -34,44 +36,44 @@ internal object Mapper {
         uid: String?
     ): HabitSQLEntity {
         return HabitSQLEntity(
-            habit.name,
-            habit.description,
-            habit.priority,
-            habit.isGood,
-            habit.amountDone,
-            habit.period,
-            habit.color,
-            if (habit.getID() == NoId) null else habit.getID(),
-            uid
+            id = if (habit.getID() == NoId) null else habit.getID(),
+            name = habit.name,
+            description = habit.description,
+            priority = habit.priority,
+            isGood = habit.isGood,
+            color = habit.color,
+            frequencyOfAllowedExecutions = habit.frequencyOfAllowedExecutions,
+            periodInDays = habit.periodInDays,
+            uid = uid,
         )
     }
 
     fun presentationToNewNet(habit: HabitItemPresentationModel): NetNewHabitEntity {
         return NetNewHabitEntity(
-            habit.color,
-            habit.amountDone,
-            System.currentTimeMillis().toInt(),
-            habit.description,
-            listOf(),
-            habit.period.toIntOrNull() ?: 1,
-            habit.priority,
-            habit.name,
-            if (habit.isGood) 1 else 0
+            color = habit.color,
+            count = habit.periodInDays,
+            date = System.currentTimeMillis().toInt(),
+            description = habit.description,
+            done_dates = listOf(),
+            frequency = habit.frequencyOfAllowedExecutions,
+            priority = habit.priority,
+            title = habit.name,
+            type = if (habit.isGood) 1 else 0
         )
     }
 
     fun presentationToNet(habit: HabitItemPresentationModel, uid: String): NetHabitEntity {
         return NetHabitEntity(
-            habit.color,
-            habit.amountDone,
-            System.currentTimeMillis().toInt(),
-            habit.description,
-            listOf(),
-            habit.period.toIntOrNull() ?: 1,
-            habit.priority,
-            habit.name,
-            if (habit.isGood) 1 else 0,
-            uid
+            color = habit.color,
+            amountDone = habit.periodInDays,
+            lastEditData = System.currentTimeMillis().toInt(),
+            description = habit.description,
+            done_dates = listOf(),
+            frequencyOfAllowedExecutions = habit.frequencyOfAllowedExecutions,
+            priority = habit.priority,
+            name = habit.name,
+            isGood = if (habit.isGood) 1 else 0,
+            uid = uid,
         )
     }
 }

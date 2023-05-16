@@ -1,14 +1,17 @@
 package com.example.habitstracker.data.net.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class NetHabitEntity(
-    val color: Int,
-    val count: Int,
-    val date: Int,
+    @SerializedName("title") val name: String,
     val description: String,
-    val done_dates: List<Int>,
-    val frequency: Int,
     val priority: Int,
-    val title: String,
-    val type: Int,
+    @SerializedName("type") val isGood: Int,
+    val color: Int,
+    //___________________date part
+    @SerializedName("frequency") val frequencyOfAllowedExecutions: Int,
+    @SerializedName("count") val periodInDays: Int,
+    @SerializedName("date") val lastEditData: Long,
+    val done_dates: List<Long>,
     val uid: String
 )

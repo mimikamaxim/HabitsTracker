@@ -59,8 +59,8 @@ class DetailHabitFragment : Fragment() {
                     habitDescriptionEditText.setText(it.description)
                     habitPrioritySpinner.setSelection(it.priority)
                     if (it.isGood) radioGroup.check(R.id.is_good) else radioGroup.check(R.id.is_bad)
-                    habitDoneAmountEditText.setText(it.amountDone.toString())
-                    habitPeriodicEditText.setText(it.period)
+                    habitDoneAmountEditText.setText(it.periodInDays.toString())
+                    habitPeriodicEditText.setText(it.frequencyOfAllowedExecutions)
                 }
                 colorItem = it.color
             }
@@ -98,14 +98,16 @@ class DetailHabitFragment : Fragment() {
         val color: Int = colorItem //TODO make color picker
 
         return HabitItemPresentationModel(
-            name,
-            description,
-            priority,
-            isGood,
-            amountDone,
-            period,
-            color,
-            viewModel.id ?: NoId
+            name = name,
+            description = description,
+            priority = priority,
+            isGood = isGood,
+            color = color,
+            frequencyOfAllowedExecutions = period.toInt(),
+            periodInDays = amountDone,
+            doneDates = listOf(),
+            initialDate = System.currentTimeMillis(),
+            id = viewModel.id ?: NoId
         )
     }
 

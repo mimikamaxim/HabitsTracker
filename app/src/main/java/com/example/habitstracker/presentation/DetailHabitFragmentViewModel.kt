@@ -29,8 +29,6 @@ class DetailHabitFragmentViewModel(val id: Int?, val interaction: Interaction) :
 
     private val _habit: MutableLiveData<HabitItemPresentationModel?> = MutableLiveData()
     val habit: LiveData<HabitItemPresentationModel?> = _habit
-//    @Inject
-//    lateinit var interaction : Interaction
 
     init {
         viewModelScope.launch {

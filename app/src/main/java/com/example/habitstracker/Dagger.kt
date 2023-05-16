@@ -46,15 +46,17 @@ interface AppComponent {
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance application: Application): AppComponent
+//        fun getComponent(): AppComponent
     }
 }
 
-@Module
+@Module()
 object SQL_RoomRepository {
     @Provides
     fun getRepository(@ApplicationContext context: Context): HabitsLocalSQLRepository {
         val database by lazy { HabitsRoomDatabase.getDatabase(context) }
         val repositorySQL by lazy { HabitsLocalSQLRepository(database.habitsDAO()) }
+//        Shared()
         return repositorySQL
     }
 
@@ -62,6 +64,16 @@ object SQL_RoomRepository {
     fun getInteraction(repo: HabitsLocalSQLRepository): Interaction {
         return Interaction(repo)
     }
+
+//    @Module
+//    abstract class {
+//        @Binds// сделать абстрактный модуль
+//        fun bindRepo(imp): interface
+//    }
+
+
+//    @Provides
+//    fun getn
 }
 
 @Module

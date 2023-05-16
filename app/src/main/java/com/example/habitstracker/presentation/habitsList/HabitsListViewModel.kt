@@ -18,6 +18,8 @@ class HabitsListViewModel(
     val list: LiveData<List<HabitItemPresentationModel>> = _list
 //    @Inject
 //    lateinit var interaction : Interaction
+//    val inter = Interaction()
+
 
     private val presentationList = interaction.getPresentationList()
 
@@ -32,6 +34,8 @@ class HabitsListViewModel(
                 originalList = list.value!!
             }
         }
+        //получить апп компонент
+
     }
 
     fun findByHabitName(request: String) {

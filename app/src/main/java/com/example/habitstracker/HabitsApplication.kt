@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 class HabitsApplication : Application() {
     //    @Inject
-//    lateinit var appComponent: AppComponent
+    lateinit var appComponent: AppComponent
 //
 ////    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
 ////        return DaggerAppComponent.builder()
@@ -20,8 +20,7 @@ class HabitsApplication : Application() {
 //        appComponent.inject(this)
 //    }
 
-    lateinit var appComponent: AppComponent
-        private set
+
 
     override fun onCreate() {
         super.onCreate()
@@ -30,7 +29,8 @@ class HabitsApplication : Application() {
 
 
     companion object {
-
+        //        lateinit var appComponent: AppComponent
+//            private set
         val applicationScope = CoroutineScope(SupervisorJob())
         val mainToastFlow = MutableSharedFlow<String>()
     }

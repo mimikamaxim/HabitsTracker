@@ -6,9 +6,11 @@ data class HabitItemPresentationModel(
     val description: String,
     val priority: Int,
     val isGood: Boolean,
-    val amountDone: Int,
-    val period: String,
     val color: Int,
+    val frequencyOfAllowedExecutions: Int,
+    val periodInDays: Int,
+    val doneDates: List<Long>,
+    val initialDate: Long,
     private val id: Int = -1
 ) {
     fun getID(): Int {
