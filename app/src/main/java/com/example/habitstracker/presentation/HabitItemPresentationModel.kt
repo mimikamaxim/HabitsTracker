@@ -9,8 +9,10 @@ data class HabitItemPresentationModel(
     val color: Int,
     val frequencyOfAllowedExecutions: Int,
     val periodInDays: Int,
-    val doneDates: List<Long>,
+    val doneDates: List<Long>,//TODO use time
     val initialDate: Long,
+    val totalCompleteTimes: Int,
+    val currentCompleteTimes: Int,
     private val id: Int = -1
 ) {
     fun getID(): Int {

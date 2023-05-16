@@ -8,7 +8,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
-@Database(entities = [HabitSQLEntity::class], version = 4)
+@Database(entities = [HabitSQLEntity::class], version = 5)
 abstract class HabitsRoomDatabase : RoomDatabase() {
 
     abstract fun habitsDAO(): HabitsDAO

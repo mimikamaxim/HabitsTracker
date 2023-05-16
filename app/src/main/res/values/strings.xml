@@ -1,14 +1,16 @@
 <resources>
-<!--    placeholders-->
+    <!--    placeholders-->
     <string name="dummy_text">Dummy text</string>
     <string name="dummy_title">Dummy title</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-<!--    titles-->
+    <string name="big_text_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+    </string>
+    <!--    titles-->
     <string name="app_name">Habits tracker</string>
     <string name="about_title">About Habits tracker</string>
     <string name="detail_title">Habit detail</string>
     <string name="habits_list_title">Habits list</string>
-<!--    messages-->
+    <!--    messages-->
     <string name="welcome_massage">Welcome to Habits tracker</string>
     <string name="about_message">This app created to helps you track you habits. You can add and track you bad and good habits</string>
     <string name="no_habit_title_err_message">Please enter habit name</string>
@@ -33,6 +35,10 @@
     <string name="sort_by_name_text">Sort by name</string>
     <string name="sort_by_add_order_text">Sort by add order</string>
     <string name="all_text">All</string>
+    <string name="more_actions_text">More actions</string>
+    <string name="habit_logo_text">Habit logo</string>
+    <string name="edit_habit_text">Edit habit</string>
+    <string name="delete_habit_text">Delete habit</string>
     <!--    content descriptors-->
     <string name="logo_content_description">Logo</string>
     <!--    arrays-->

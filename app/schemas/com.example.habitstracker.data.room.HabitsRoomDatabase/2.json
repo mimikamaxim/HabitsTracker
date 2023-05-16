@@ -1,0 +1,94 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "86c69fdc83e27b72ccf4ce33221b707e",
+    "entities": [
+      {
+        "tableName": "habits_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `description` TEXT NOT NULL, `priority` INTEGER NOT NULL, `isGood` INTEGER NOT NULL, `amountDone` INTEGER NOT NULL, `period` TEXT NOT NULL, `color` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT, `uid` TEXT, `lastEditData` INTEGER NOT NULL, `initialDate` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "title",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "priority",
+            "columnName": "priority",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isGood",
+            "columnName": "isGood",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amountDone",
+            "columnName": "amountDone",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "period",
+            "columnName": "period",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastEditData",
+            "columnName": "lastEditData",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "initialDate",
+            "columnName": "initialDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86c69fdc83e27b72ccf4ce33221b707e')"
+    ]
+  }
+}

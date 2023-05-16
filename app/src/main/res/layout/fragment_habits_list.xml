@@ -7,18 +7,19 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/bright_gray">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:name="com.example.habitstracker.HabitsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_margin"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:context=".presentation.habitsList.HabitsFragment"
-            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/fragment_habits" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

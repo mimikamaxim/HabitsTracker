@@ -23,9 +23,11 @@ data class HabitSQLEntity(
      * Represents Remote repository id
      */
     @ColumnInfo val uid: String? = null,
+    @ColumnInfo var doneDates: List<Long> = listOf(),
+    @ColumnInfo var totalCompleteTimes: Int,
+    @ColumnInfo var currentCompleteTimes: Int,
     @ColumnInfo val lastEditData: Long = System.currentTimeMillis(),
     @ColumnInfo val initialDate: Long = System.currentTimeMillis(),
-    @ColumnInfo var doneDates: List<Long> = listOf(),
     @ColumnInfo var listEditDates: List<Long>
 )
 

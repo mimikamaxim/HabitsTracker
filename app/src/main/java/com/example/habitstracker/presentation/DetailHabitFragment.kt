@@ -106,7 +106,7 @@ class DetailHabitFragment : Fragment() {
             frequencyOfAllowedExecutions = period.toInt(),
             periodInDays = amountDone,
             doneDates = listOf(),
-            initialDate = System.currentTimeMillis(),
+            initialDate = System.currentTimeMillis(), ,
             id = viewModel.id ?: NoId
         )
     }

@@ -20,10 +20,18 @@ import javax.inject.Inject
 class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType.ALL) : Fragment() {
     private lateinit var binding: FragmentHabitsListBinding
     private val clickItemHandler = object : ClickItemHandler {
-        override fun onClickItemHandler(view: View, id: Int) {
+        override fun onNavigateToDetails(id: Int) {
             val args = Bundle()
             args.putInt(KEY_ID, id)
             findNavController().navigate(R.id.detailHabitFragment, args)
+        }
+
+        override fun onDeleteItem(id: Int) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onAddDone(id: Int) {
+            TODO("Not yet implemented")
         }
     }
 
@@ -33,7 +41,6 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
         super.onCreate(savedInstanceState)
         val appComponent = (requireActivity().application as HabitsApplication).appComponent
         appComponent.inject(this)
-//        HabitsApplication.appComponent.inject(this)
     }
 
     private val viewModel: HabitsListViewModel by viewModels {
@@ -65,17 +72,6 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
         viewModel.list.observe(viewLifecycleOwner) {
             adapter?.updateList(it)
         }
-//        viewModel.list.observe(viewLifecycleOwner) {
-//            with(binding.list) {
-//                adapter =
-//                    HabitItemRecyclerViewAdapter(
-//                        viewModel.list.value ?: emptyList(),
-//                        clickItemHandler,
-//                        context
-//                    )
-//                layoutManager = LinearLayoutManager(context)
-//            }
-//        }
 
         binding.newItem.setOnClickListener {
             findNavController().navigate(R.id.detailHabitFragment)
@@ -101,9 +97,5 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
         binding.bottomSheet.sortByDefaultBtn.setOnClickListener { viewModel.sortByHabitId() }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 }

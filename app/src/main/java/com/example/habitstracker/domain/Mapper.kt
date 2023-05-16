@@ -26,7 +26,7 @@ internal object Mapper {
             frequencyOfAllowedExecutions = habitSQLEntity.frequencyOfAllowedExecutions,
             periodInDays = habitSQLEntity.periodInDays,
             doneDates = habitSQLEntity.doneDates,
-            initialDate = habitSQLEntity.initialDate,
+            initialDate = habitSQLEntity.initialDate, ,
             id = habitSQLEntity.id ?: throw Exception("No ID for element from base")
         )
     }
