@@ -8,8 +8,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/save_btn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/save_btn">
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -114,48 +116,70 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/habit_done_amount"
+                android:id="@+id/habit_total_complete_times"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
-                android:text="@string/done_amount_text"
+                android:text="@string/you_complete_the_habit_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
             <EditText
-                android:id="@+id/habit_done_amount_edit_text"
+                android:id="@+id/habit_total_complete_times_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:autofillHints="1"
                 android:ems="4"
-                android:hint="@string/done_amount_text"
+                android:hint="@string/you_complete_the_habit_text"
                 android:inputType="number"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/habit_done_amount" />
+                app:layout_constraintTop_toBottomOf="@+id/habit_total_complete_times" />
 
             <TextView
                 android:id="@+id/habit_periodic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
-                android:text="@string/period_text"
+                android:text="@string/allowed_frequency_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/habit_done_amount_edit_text" />
+                app:layout_constraintTop_toBottomOf="@+id/habit_total_complete_times_edit_text" />
 
             <EditText
-                android:id="@+id/habit_periodic_edit_text"
+                android:id="@+id/habit_allowed_times_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
-                android:autofillHints="One per week"
-                android:ems="12"
-                android:hint="@string/period_text"
+                android:ems="4"
+                android:hint="@string/times_text"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/habit_periodic" />
+
+            <TextView
+                android:id="@+id/times_in_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:text="@string/times_in_text"
+                app:layout_constraintBottom_toBottomOf="@+id/habit_allowed_times_edit_text"
+                app:layout_constraintStart_toEndOf="@+id/habit_allowed_times_edit_text"
+                app:layout_constraintTop_toTopOf="@+id/habit_allowed_times_edit_text" />
+
+            <EditText
+                android:id="@+id/period_days_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:layout_marginBottom="3dp"
+                android:ems="4"
+                android:hint="@string/days_text"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@+id/habit_allowed_times_edit_text"
+                app:layout_constraintStart_toEndOf="@+id/times_in_text"
+                app:layout_constraintTop_toTopOf="@+id/habit_allowed_times_edit_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

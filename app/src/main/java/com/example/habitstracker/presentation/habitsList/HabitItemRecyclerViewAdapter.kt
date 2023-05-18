@@ -22,7 +22,7 @@ class HabitItemRecyclerViewAdapter(
 
     fun updateList(list: List<HabitItemPresentationModel>) {
         values = list
-        notifyDataSetChanged()
+        notifyDataSetChanged()//TODO 3 optimise list updates
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,24 +38,46 @@ class HabitItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.itemTitle.text = item.name
+        holder.itemName.text = item.name
         holder.itemDescriptions.text = item.description
         holder.itemPriority.text = buildString {
             append(context.getString(R.string.priority_text))
             append(": ")
             append(item.priority.toString())
         }
-        holder.itemAmountDone.text = buildString {
-            append(context.getString(R.string.done_amount_text))
+        holder.itemTotalCompleteTimes.text = buildString {
+            append(context.getString(R.string.you_complete_the_habit_text))
             append(": ")
-            append(item.periodInDays)
+            append(item.totalCompleteTimes.toString())
+            append(" ")
+            append(context.getString(R.string.times_text))
         }
         holder.itemPeriod.text = buildString {
-            append(context.getString(R.string.period_text))
+            append(context.getString(R.string.allowed_frequency_text))
             append(": ")
             append(item.frequencyOfAllowedExecutions.toString())
+            append(" ")
+            append(context.getString(R.string.times_in_text))
+            append(" ")
+            append(item.periodInDays.toString())
+            append(" ")
+            append(context.getString(R.string.days_text))
         }
         holder.itemColorAndIsGood.setColorFilter(item.color)
+        holder.itemCurrentCompleteTimes.text = buildString {
+            append(context.getString(R.string.now_done_text))
+            append(" ")
+            append(item.currentCompleteTimes.toString())
+            append(" ")
+            append(context.getString(R.string.times_text))
+        }
+        holder.itemDoneDates.text = StringBuilder().apply { //TODO 3 make it more accurate
+            val arr = item.doneDates
+            arr.forEach {
+                append(it.dayOfMonth.toString())
+                append(" ")
+            }
+        }
 
         if (item.isGood)
             holder.itemColorAndIsGood.setImageResource(R.drawable.ic_baseline_thumb_up_24)
@@ -78,11 +100,12 @@ class HabitItemRecyclerViewAdapter(
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentHabitsBinding) : RecyclerView.ViewHolder(binding.root) {
-        val itemTitle: TextView = binding.itemTitle
+        val itemName: TextView = binding.itemName
         val itemDescriptions: TextView = binding.itemDescription
         val itemPriority: TextView = binding.itemPriority
-        val itemAmountDone: TextView = binding.itemAmountDone
+        val itemTotalCompleteTimes: TextView = binding.itemTotalCompleteTimes
         val itemPeriod: TextView = binding.itemPeriod
+        val itemCurrentCompleteTimes: TextView = binding.itemCurrentCompleteTimes
         val itemColorAndIsGood: ImageView = binding.itemColorAndIsGood
         val itemDoneDates: TextView = binding.doneDates
         val btnDone: ImageView = binding.doneBtn
@@ -98,7 +121,7 @@ class HabitItemRecyclerViewAdapter(
         val popupMenu = PopupMenu(view.context, view)
         val context = view.context
 
-        //TODO maybe add reset executions
+        //TODO 3 maybe add reset executions
         popupMenu.menu.add(0, EDIT_HABIT, Menu.NONE, context.getString(R.string.edit_habit_text))
         popupMenu.menu.add(
             0,

@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailHabitFragment"
-        android:name="com.example.habitstracker.presentation.DetailHabitFragment"
+        android:name="com.example.habitstracker.presentation.detail.DetailHabitFragment"
         android:label="@string/detail_title"
         tools:layout="@layout/fragment_detail_habit"/>
     <fragment

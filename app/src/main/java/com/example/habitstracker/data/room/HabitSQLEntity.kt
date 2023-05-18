@@ -3,7 +3,7 @@ package com.example.habitstracker.data.room
 import androidx.room.*
 
 @Entity(tableName = "habits_table")
-@TypeConverters(ListConverter::class)
+@TypeConverters(MyConverter::class)
 data class HabitSQLEntity(
     @PrimaryKey(true) val id: Int? = null,
     @ColumnInfo(name = "name") val name: String,
@@ -23,15 +23,15 @@ data class HabitSQLEntity(
      * Represents Remote repository id
      */
     @ColumnInfo val uid: String? = null,
-    @ColumnInfo var doneDates: List<Long> = listOf(),
+    @ColumnInfo var doneDates: MutableList<Long> = mutableListOf(),
     @ColumnInfo var totalCompleteTimes: Int,
     @ColumnInfo var currentCompleteTimes: Int,
-    @ColumnInfo val lastEditData: Long = System.currentTimeMillis(),
-    @ColumnInfo val initialDate: Long = System.currentTimeMillis(),
+    @ColumnInfo val lastEditData: Long,
+    @ColumnInfo var initialDate: Long,
     @ColumnInfo var listEditDates: List<Long>
 )
 
-private class ListConverter {
+private class MyConverter {
     @TypeConverter
     fun fromListIntToString(list: List<Long>): String {
         return list.joinToString(",")
@@ -40,5 +40,15 @@ private class ListConverter {
     @TypeConverter
     fun toListIntFromString(string: String): List<Long> {
         return string.split(",").map { it.toLong() }
+    }
+
+    @TypeConverter
+    fun fromStringToLong(string: String): Long {
+        return string.toLong()
+    }
+
+    @TypeConverter
+    fun longToString(long: Long): String {
+        return long.toString()
     }
 }

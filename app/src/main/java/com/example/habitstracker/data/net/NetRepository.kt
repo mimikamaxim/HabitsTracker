@@ -19,12 +19,16 @@ class NetRepository {
     private val scope = applicationScope
     private val habitApiService = createApiService()
     private val token = "9588724c-8c76-4cb5-9a54-0dfd834c02f4"
+    private val authorization = "Authorization"
+    private val baseUrl = "https://droid-test-server.doubletapp.ru/"
+    private val accept = "accept"
+    private val appType = "application/json"
 
     private fun createAuthorizationInterceptor(): Interceptor {
         return Interceptor { chain ->
             val newBuilder = chain.request().newBuilder()
-            newBuilder.addHeader("Authorization", token)
-            newBuilder.addHeader("accept", "application/json")
+            newBuilder.addHeader(authorization, token)
+            newBuilder.addHeader(accept, appType)
             return@Interceptor chain.proceed(newBuilder.build())
         }
     }
@@ -83,7 +87,7 @@ class NetRepository {
         job.join()
     }
 
-    suspend fun addDoneDate(date: Int, iud: String) {
+    suspend fun addDoneDate(date: Long, iud: String) {
         val job = scope.launch {
             habitApiService.addDoneHabitDate(DoneDateEntity(date, iud))
         }

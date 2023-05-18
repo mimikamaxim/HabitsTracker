@@ -40,6 +40,14 @@ class HabitsLocalSQLRepository(private val habitsDAO: HabitsDAO) : IHabitsSQLRep
     }
 
     override suspend fun getLastItem(): HabitSQLEntity {
-        return habitsDAO.getLastItem()
+        return withContext(Dispatchers.IO) { habitsDAO.getLastItem() }
+    }
+
+    suspend fun addRemoteUid(id: Int, uid: String) {
+        withContext(Dispatchers.IO) { habitsDAO.addRemoteUid(id, uid) }
+    }
+
+    suspend fun delete(habitSQLEntity: HabitSQLEntity) {
+        withContext(Dispatchers.IO) { habitsDAO.delete(habitSQLEntity) }
     }
 }

@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habitstracker.domain.Interaction
 import com.example.habitstracker.presentation.HabitItemPresentationModel
+import com.example.habitstracker.presentation.IInteraction
 import kotlinx.coroutines.launch
 
 class HabitsListViewModel(
     listType: HabitsListType = HabitsListType.ALL,
-    interaction: Interaction
+    val interaction: IInteraction //injected
 ) : ViewModel() {
 
     private var originalList = listOf<HabitItemPresentationModel>()
@@ -50,6 +50,10 @@ class HabitsListViewModel(
     }
 
     fun deleteHabit(id: Int) {
-        //TODO delete action
+        interaction.deleteHabit(id)
+    }
+
+    fun addDone(id: Int) {
+        interaction.addDone(id)
     }
 }

@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habitstracker.HabitsApplication
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsListBinding
-import com.example.habitstracker.domain.Interaction
 import com.example.habitstracker.myLogger
-import com.example.habitstracker.presentation.KEY_ID
+import com.example.habitstracker.presentation.IInteraction
+import com.example.habitstracker.presentation.detail.KEY_ID
 import javax.inject.Inject
 
 class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType.ALL) : Fragment() {
@@ -27,16 +27,16 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
         }
 
         override fun onDeleteItem(id: Int) {
-            TODO("Not yet implemented")
+            viewModel.deleteHabit(id)
         }
 
         override fun onAddDone(id: Int) {
-            TODO("Not yet implemented")
+            viewModel.addDone(id)
         }
     }
 
     @Inject
-    lateinit var interaction: Interaction
+    lateinit var interaction: IInteraction
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val appComponent = (requireActivity().application as HabitsApplication).appComponent

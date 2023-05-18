@@ -1,18 +1,20 @@
 package com.example.habitstracker.presentation
 
+import java.time.LocalDateTime
+
 
 data class HabitItemPresentationModel(
-    val name: String,
-    val description: String,
-    val priority: Int,
-    val isGood: Boolean,
-    val color: Int,
-    val frequencyOfAllowedExecutions: Int,
-    val periodInDays: Int,
-    val doneDates: List<Long>,//TODO use time
-    val initialDate: Long,
-    val totalCompleteTimes: Int,
-    val currentCompleteTimes: Int,
+    var name: String,//**
+    var description: String,//**
+    var priority: Int,//**
+    var isGood: Boolean,//**
+    var color: Int,//inop*
+    var frequencyOfAllowedExecutions: Int,//**
+    var periodInDays: Int,//**
+    var doneDates: MutableList<LocalDateTime>,//auto*
+    var initialDate: LocalDateTime,//auto
+    var totalCompleteTimes: Int,//*
+    var currentCompleteTimes: Int,//auto
     private val id: Int = -1
 ) {
     fun getID(): Int {

@@ -1,0 +1,41 @@
+    private fun getHabitItem(): HabitItemPresentationModel? {
+        val name: String = binding.habitTitleEditText.text.toString()
+        if (name.isEmpty()) {
+            makeToast(getString(R.string.no_habit_title_err_message))
+            return null
+        }
+
+        val description: String = binding.habitDescriptionEditText.text.toString()
+        if (description.isEmpty()) {
+            makeToast(getString(R.string.no_habit_description_err_message))
+            return null
+        }
+
+        val priority: Int = binding.habitPrioritySpinner.selectedItemPosition
+        val isGood: Boolean = binding.radioGroup.checkedRadioButtonId == R.id.is_good
+        val amountDone: Int = if (binding.habitDoneAmountEditText.text.toString().isEmpty()) {
+            makeToast(getString(R.string.no_habit_allowed_executions_err_message))
+            return null
+        } else binding.habitDoneAmountEditText.text.toString().toInt()
+
+        val period: String = binding.habitPeriodicEditText.text.toString()
+        if (period.isEmpty()) {
+            makeToast(getString(R.string.no_habit_days_period_err_message))
+            return null
+        }
+
+        val color: Int = colorItem
+
+        return HabitItemPresentationModel(
+            name = name,
+            description = description,
+            priority = priority,
+            isGood = isGood,
+            color = color,
+            frequencyOfAllowedExecutions = period.toInt(),
+            periodInDays = amountDone,
+            doneDates = listOf(),
+            initialDate = System.currentTimeMillis(), ,
+            id = viewModel.id ?: NoId
+        )
+    }

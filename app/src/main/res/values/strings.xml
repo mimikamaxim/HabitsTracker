@@ -15,9 +15,9 @@
     <string name="about_message">This app created to helps you track you habits. You can add and track you bad and good habits</string>
     <string name="no_habit_title_err_message">Please enter habit name</string>
     <string name="no_habit_description_err_message">Please enter habit description</string>
-    <string name="no_habit_done_amount_err_message">Please enter done count</string>
-    <string name="no_habit_periodic_err_message">Please enter periodic</string>
-<!--    text-->
+    <string name="no_habit_allowed_executions_err_message">Please enter allowed executions</string>
+    <string name="no_habit_days_period_err_message">Please enter days period</string>
+    <!--    text-->
     <string name="habit_title_text">Habit name</string>
     <string name="habit_description_text">Habit description</string>
     <string name="habit_type_text">Habit type</string>
@@ -27,8 +27,9 @@
     <string name="start_text">Start</string>
     <string name="add_new_habit_text">Add new habit</string>
     <string name="priority_text">Priority</string>
-    <string name="done_amount_text">Done</string>
-    <string name="period_text">Period</string>
+    <string name="you_complete_the_habit_text">You complete the habit</string>
+    <string name="allowed_frequency_text">Allowed frequency</string>
+    <string name="times_in_text">Times in</string>
     <string name="pull_up_to_see_filters_text">Pull up to see filters</string>
     <string name="type_here_to_filter_by_name_text">Type here to find by name</string>
     <string name="type_here_to_find_in_description_text">Type here to find in description</string>
@@ -39,8 +40,13 @@
     <string name="habit_logo_text">Habit logo</string>
     <string name="edit_habit_text">Edit habit</string>
     <string name="delete_habit_text">Delete habit</string>
+    <string name="days_text">Days</string>
+    <string name="now_done_text">Now done</string>
+    <string name="times_text">times</string>
     <!--    content descriptors-->
     <string name="logo_content_description">Logo</string>
+    <string name="done_content_description">Done</string>
+    <string name="no_habit_total_complete_times_err_message">Please enter how much you finished you habit</string>
     <!--    arrays-->
     <string-array name="priority_values">
         <item>0</item>

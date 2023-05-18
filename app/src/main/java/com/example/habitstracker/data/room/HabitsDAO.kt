@@ -28,6 +28,9 @@ interface HabitsDAO {
     @Query("SELECT * FROM habits_table WHERE id = :id")
     suspend fun getItem(id: Int): HabitSQLEntity
 
+    @Query("UPDATE habits_table SET uid = :uid WHERE id = :id")
+    suspend fun addRemoteUid(id: Int, uid: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(habitSQLEntity: HabitSQLEntity)
 
