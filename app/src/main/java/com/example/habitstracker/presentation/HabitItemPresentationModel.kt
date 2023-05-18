@@ -2,7 +2,6 @@ package com.example.habitstracker.presentation
 
 import java.time.LocalDateTime
 
-
 data class HabitItemPresentationModel(
     var name: String,//**
     var description: String,//**

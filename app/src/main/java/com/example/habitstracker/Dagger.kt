@@ -2,9 +2,9 @@ package com.example.habitstracker
 
 import android.app.Application
 import android.content.Context
-import com.example.habitstracker.data.HabitsLocalSQLRepository
-import com.example.habitstracker.data.room.HabitsRoomDatabase
-import com.example.habitstracker.domain.Interaction
+import com.example.data.HabitsLocalSQLRepository
+import com.example.data.room.HabitsRoomDatabase
+import com.example.domain.Interaction
 import com.example.habitstracker.presentation.IInteraction
 import com.example.habitstracker.presentation.detail.DetailHabitFragment
 import com.example.habitstracker.presentation.detail.DetailHabitFragmentViewModel

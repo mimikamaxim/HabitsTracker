@@ -2,7 +2,7 @@ package com.example.habitstracker.placeholder
 
 // Импорты
 import android.util.Log
-import com.example.habitstracker.data.net.RetryInterceptor
+import com.example.data.net.RetryInterceptor
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
