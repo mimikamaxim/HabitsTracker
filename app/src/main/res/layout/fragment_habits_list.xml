@@ -15,10 +15,13 @@
             android:name="com.example.habitstracker.HabitsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginStart="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginBottom="50dp"
             app:layoutManager="LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:context=".presentation.habitsList.HabitsFragment"
             tools:listitem="@layout/fragment_habits" />
     </androidx.constraintlayout.widget.ConstraintLayout>
