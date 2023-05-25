@@ -5,16 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.habitstracker.presentation.HabitItemPresentationModel
-import com.example.habitstracker.presentation.IInteraction
+import com.example.domain.IInteraction
+import com.example.domain.entitys.DomainHabitEntity
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 class DetailHabitFragmentViewModel(val id: Int?, val interaction: IInteraction) : ViewModel() {
 
-    private val _habit: MutableLiveData<HabitItemPresentationModel> = MutableLiveData()
-    val habit: LiveData<HabitItemPresentationModel> = _habit
-    private var editableHabit: HabitItemPresentationModel = HabitItemPresentationModel(
+    private val _habit: MutableLiveData<DomainHabitEntity> = MutableLiveData()
+    val habit: LiveData<DomainHabitEntity> = _habit
+    private var editableHabit: DomainHabitEntity = DomainHabitEntity(
         "",
         "",
         0,
@@ -26,7 +26,7 @@ class DetailHabitFragmentViewModel(val id: Int?, val interaction: IInteraction) 
         initialDate = LocalDateTime.now(),
         0,
         0,
-        id = HabitItemPresentationModel.NoId
+        id = DomainHabitEntity.NoId
     )
 
     init {
@@ -63,14 +63,14 @@ class DetailHabitFragmentViewModel(val id: Int?, val interaction: IInteraction) 
     }
 
     fun setFreqExec(str: String) {
-        editableHabit.frequencyOfAllowedExecutions = str.toInt()
+        if (str.isNotEmpty()) editableHabit.frequencyOfAllowedExecutions = str.toInt()
     }
 
     fun setPeriod(str: String) {
-        editableHabit.periodInDays = str.toInt()
+        if (str.isNotEmpty()) editableHabit.periodInDays = str.toInt()
     }
 
     fun setTotalCompleteTimes(str: String) {
-        editableHabit.totalCompleteTimes = str.toInt()
+        if (str.isNotEmpty()) editableHabit.totalCompleteTimes = str.toInt()
     }
 }

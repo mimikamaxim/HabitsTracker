@@ -1,8 +1,8 @@
-package com.example.habitstracker.presentation
+package com.example.domain.entitys
 
 import java.time.LocalDateTime
 
-data class HabitItemPresentationModel(
+data class DomainHabitEntity(
     var name: String,//**
     var description: String,//**
     var priority: Int,//**
@@ -14,6 +14,7 @@ data class HabitItemPresentationModel(
     var initialDate: LocalDateTime,//auto
     var totalCompleteTimes: Int,//*
     var currentCompleteTimes: Int,//auto
+    var uid: String = "",
     private val id: Int = -1
 ) {
     fun getID(): Int {

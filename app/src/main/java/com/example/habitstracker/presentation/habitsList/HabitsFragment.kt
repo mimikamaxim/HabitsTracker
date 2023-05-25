@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.domain.IInteraction
 import com.example.habitstracker.HabitsApplication
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsListBinding
 import com.example.habitstracker.myLogger
-import com.example.habitstracker.presentation.IInteraction
 import com.example.habitstracker.presentation.detail.KEY_ID
 import javax.inject.Inject
 
@@ -46,7 +47,8 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
     private val viewModel: HabitsListViewModel by viewModels {
         HabitsListViewModelFactory(
             habitsListType,
-            interaction
+            interaction,
+            requireContext()
         )
     }
 
@@ -95,6 +97,10 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
         binding.bottomSheet.sortByNameBtn.setOnClickListener { viewModel.sortByHabitName() }
 
         binding.bottomSheet.sortByDefaultBtn.setOnClickListener { viewModel.sortByHabitId() }
+
+        viewModel.toastSource.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
 
         return binding.root
     }

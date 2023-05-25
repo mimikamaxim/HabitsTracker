@@ -1,16 +1,20 @@
 package com.example.domain
 
-import com.example.data.room.HabitSQLEntity
+import com.example.domain.entitys.DomainHabitEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IHabitsSQLRepository {
-    val listHabits: Flow<List<HabitSQLEntity>>
+    val listHabits: Flow<List<DomainHabitEntity>>
 
-    suspend fun insert(habitSQLEntity: HabitSQLEntity)
+    suspend fun insert(habit: DomainHabitEntity): Long
 
-    suspend fun update(habitSQLEntity: HabitSQLEntity)
+    suspend fun update(habit: DomainHabitEntity)
 
-    suspend fun getItem(id: Int): HabitSQLEntity
+    suspend fun getItem(id: Int): DomainHabitEntity
 
-    suspend fun getLastItem(): HabitSQLEntity
+    suspend fun getLastItem(): DomainHabitEntity
+
+    suspend fun addRemoteUid(id: Long, uid: String)
+
+    suspend fun delete(id: Long)
 }

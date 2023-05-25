@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="do_more_prefix_message">Well done! Do it </string>
+    <string name="do_more_postfix_message"> more times</string>
+    <string name="you_done_message">Well done! You did it!</string>
+    <string name="can_do_it_more_prefix_message">You can do it </string>
+    <string name="can_do_it_more_postfix_message"> more times</string>
+    <string name="stop_doing_this_message">You already done you limit! Stop doing it!</string>
+</resources>

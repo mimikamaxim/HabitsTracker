@@ -10,17 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.example.domain.entitys.DomainHabitEntity
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsBinding
-import com.example.habitstracker.presentation.HabitItemPresentationModel
 
 class HabitItemRecyclerViewAdapter(
-    private var values: List<HabitItemPresentationModel>,
+    private var values: List<DomainHabitEntity>,
     private val clickItemHandler: ClickItemHandler,
     private val context: Context
 ) : RecyclerView.Adapter<HabitItemRecyclerViewAdapter.ViewHolder>() {
 
-    fun updateList(list: List<HabitItemPresentationModel>) {
+    fun updateList(list: List<DomainHabitEntity>) {
         values = list
         notifyDataSetChanged()//TODO 3 optimise list updates
     }

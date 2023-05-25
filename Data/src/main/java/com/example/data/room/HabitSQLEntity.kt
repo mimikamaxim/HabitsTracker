@@ -39,7 +39,8 @@ private class MyConverter {
 
     @TypeConverter
     fun toListIntFromString(string: String): List<Long> {
-        return string.split(",").map { it.toLong() }
+        return if (string.isNotEmpty()) string.split(",").map { it.toLong() }
+        else listOf()
     }
 
     @TypeConverter

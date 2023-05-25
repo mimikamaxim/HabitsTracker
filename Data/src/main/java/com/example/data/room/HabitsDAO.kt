@@ -3,6 +3,7 @@ package com.example.data.room
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+
 /**
  * The Room Magic is in this file, where you map a method call to an SQL query.
  *
@@ -32,7 +33,7 @@ interface HabitsDAO {
     suspend fun addRemoteUid(id: Int, uid: String)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(habitSQLEntity: HabitSQLEntity)
+    suspend fun insert(habitSQLEntity: HabitSQLEntity): Long
 
     @Update
     suspend fun update(habitSQLEntity: HabitSQLEntity)
@@ -43,7 +44,7 @@ interface HabitsDAO {
     @Query("DELETE FROM habits_table")
     suspend fun deleteAll()
 
-    @Query(//TODO sql hints??
+    @Query(
         "SELECT * FROM habits_table\n" +
                 "ORDER BY id DESC\n" +
                 "LIMIT 1;\n"

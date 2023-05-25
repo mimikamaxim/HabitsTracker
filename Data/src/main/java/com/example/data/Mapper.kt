@@ -1,26 +1,25 @@
 package com.example.domain
 
+import com.example.data.DateTimeConverterHelper
 import com.example.data.net.entity.NetHabitEntity
 import com.example.data.net.entity.NetNewHabitEntity
-import com.example.habitstracker.presentation.HabitItemPresentationModel
-import com.example.habitstracker.presentation.HabitItemPresentationModel.Companion.NoId
-import java.time.Instant
+import com.example.data.room.HabitSQLEntity
+import com.example.domain.entitys.DomainHabitEntity
+import com.example.domain.entitys.DomainHabitEntity.Companion.NoId
 import java.time.LocalDateTime
-import java.time.ZoneOffset
-import com.example.data.room.HabitSQLEntity as HabitSQLEntity1
 
 internal object Mapper {
 
-    fun dataListToPresentationList(dataList: List<HabitSQLEntity1>): List<HabitItemPresentationModel> {
-        val result = mutableListOf<HabitItemPresentationModel>()
+    fun sqlListToDomainList(dataList: List<HabitSQLEntity>): List<DomainHabitEntity> {
+        val result = mutableListOf<DomainHabitEntity>()
         dataList.forEach {
-            result.add(dataEntityToPresentationModel(it))
+            result.add(sqlEntityToDomainEntity(it))
         }
         return result
     }
 
-    fun dataEntityToPresentationModel(habitSQLEntity: HabitSQLEntity1): HabitItemPresentationModel {
-        return HabitItemPresentationModel(
+    fun sqlEntityToDomainEntity(habitSQLEntity: HabitSQLEntity): DomainHabitEntity {
+        return DomainHabitEntity(
             name = habitSQLEntity.name,
             description = habitSQLEntity.description,
             priority = habitSQLEntity.priority,
@@ -32,15 +31,16 @@ internal object Mapper {
             initialDate = DateTimeConverterHelper.timeInEpochSecondsToLocalDateTime(habitSQLEntity.initialDate),
             totalCompleteTimes = habitSQLEntity.totalCompleteTimes,
             currentCompleteTimes = habitSQLEntity.currentCompleteTimes,
-            id = habitSQLEntity.id ?: throw Exception("No ID for element from base")
+            id = habitSQLEntity.id ?: throw Exception("No ID for element from base"),
+            uid = habitSQLEntity.uid ?: ""
         )
     }
 
-    fun presentationHabitToDataEntity(
-        habit: HabitItemPresentationModel,
+    fun domainToSqlEntity(
+        habit: DomainHabitEntity,
         uid: String?
-    ): HabitSQLEntity1 {
-        return HabitSQLEntity1(
+    ): HabitSQLEntity {
+        return HabitSQLEntity(
             id = if (habit.getID() == NoId) null else habit.getID(),
             name = habit.name,
             description = habit.description,
@@ -57,11 +57,11 @@ internal object Mapper {
             lastEditData = DateTimeConverterHelper.localDateTimeToCurrentTimeInEpochSeconds(
                 LocalDateTime.now()
             ),
-            listEditDates = listOf()// TODO add for good sync
+            listEditDates = listOf()
         )
     }
 
-    fun sqlToNewNet(habit: com.example.data.room.HabitSQLEntity): NetNewHabitEntity {
+    fun sqlToNewNet(habit: HabitSQLEntity): NetNewHabitEntity {
         return NetNewHabitEntity(
             name = habit.name,
             description = habit.description,
@@ -74,7 +74,7 @@ internal object Mapper {
         )
     }
 
-    fun sqlToNet(habit: HabitSQLEntity1, uid: String): NetHabitEntity {
+    fun sqlToNet(habit: HabitSQLEntity, uid: String): NetHabitEntity {
         return NetHabitEntity(
             name = habit.name,
             description = habit.description,
@@ -89,8 +89,8 @@ internal object Mapper {
         )
     }
 
-    fun netToSQL(netEn: NetHabitEntity): HabitSQLEntity1 {
-        return HabitSQLEntity1(
+    fun netToSQL(netEn: NetHabitEntity): HabitSQLEntity {
+        return HabitSQLEntity(
             id = null,
             name = netEn.name,
             description = netEn.description,
@@ -108,36 +108,59 @@ internal object Mapper {
             currentCompleteTimes = 0//todo calculate it
         )
     }
+
+    fun listNetToListDomain(habits: List<NetHabitEntity>): List<DomainHabitEntity> {
+        val list: MutableList<DomainHabitEntity> = mutableListOf()
+        habits.forEach {
+            list.add(netToDomain(it))
+        }
+        return list
+    }
+
+    fun netToDomain(netHabitEntity: NetHabitEntity): DomainHabitEntity {
+        return DomainHabitEntity(
+            name = netHabitEntity.name,
+            description = netHabitEntity.description,
+            priority = netHabitEntity.priority,
+            isGood = netHabitEntity.isGood == 1,
+            color = netHabitEntity.color,
+            frequencyOfAllowedExecutions = netHabitEntity.frequencyOfAllowedExecutions,
+            periodInDays = netHabitEntity.periodInDays,
+            doneDates = DateTimeConverterHelper.listSecondsToDataTime(netHabitEntity.done_dates),
+            initialDate = DateTimeConverterHelper.timeInEpochSecondsToLocalDateTime(netHabitEntity.lastEditData),
+            totalCompleteTimes = 0,
+            currentCompleteTimes = 0,//todo calculate
+            id = NoId,
+            uid = netHabitEntity.uid
+        )
+    }
+
+    fun domainToNewNet(habit: DomainHabitEntity): NetNewHabitEntity {
+        return NetNewHabitEntity(
+            name = habit.name,
+            description = habit.description,
+            color = habit.color,
+            lastEditData = DateTimeConverterHelper.getCurrentTimeInEpochSeconds(),
+            periodInDays = habit.periodInDays,
+            isGood = if (habit.isGood) 1 else 0,
+            frequencyOfAllowedExecutions = habit.frequencyOfAllowedExecutions,
+            priority = habit.priority
+        )
+    }
+
+    fun domainToNet(habit: DomainHabitEntity): NetHabitEntity {
+        return NetHabitEntity(
+            name = habit.name,
+            description = habit.description,
+            color = habit.color,
+            lastEditData = DateTimeConverterHelper.getCurrentTimeInEpochSeconds(),
+            periodInDays = habit.periodInDays,
+            isGood = if (habit.isGood) 1 else 0,
+            frequencyOfAllowedExecutions = habit.frequencyOfAllowedExecutions,
+            priority = habit.priority,
+            uid = habit.uid,
+            done_dates = listOf() // Stub because server ignoring done dates
+        )
+    }
 }
 
-object DateTimeConverterHelper {
-    val currentOffset = ZoneOffset.systemDefault().rules.getOffset(Instant.now())
-
-    fun getCurrentTimeInEpochSeconds(): Long {
-        return System.currentTimeMillis() / 1000
-    }
-
-    fun localDateTimeToCurrentTimeInEpochSeconds(dateTime: LocalDateTime): Long {
-        return dateTime.toEpochSecond(currentOffset)
-    }
-
-    fun timeInEpochSecondsToLocalDateTime(time: Long): LocalDateTime {
-        return LocalDateTime.ofEpochSecond(time, 0, currentOffset)
-    }
-
-    fun listSecondsToDataTime(list: List<Long>): MutableList<LocalDateTime> {
-        val mutableList = mutableListOf<LocalDateTime>()
-        list.forEach {
-            mutableList.add(timeInEpochSecondsToLocalDateTime(it))
-        }
-        return mutableList
-    }
-
-    fun listDataTimeToSeconds(list: List<LocalDateTime>): MutableList<Long> {
-        val mList = mutableListOf<Long>()
-        list.forEach {
-            mList.add(localDateTimeToCurrentTimeInEpochSeconds(it))
-        }
-        return mList
-    }
-}

@@ -1,14 +1,15 @@
 package com.example.habitstracker.presentation.test
 
 import android.graphics.Color
-import com.example.habitstracker.presentation.HabitItemPresentationModel
-import com.example.habitstracker.presentation.IInteraction
+import com.example.domain.IInteraction
+import com.example.domain.ResultAddDate
+import com.example.domain.entitys.DomainHabitEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import java.time.LocalDateTime
 
 class TestInteraction : IInteraction {
-    var list = mutableListOf<HabitItemPresentationModel>()
+    var list = mutableListOf<DomainHabitEntity>()
 
     init {
         addSample()
@@ -16,7 +17,7 @@ class TestInteraction : IInteraction {
 
     private fun addSample() {
         list.add(
-            HabitItemPresentationModel(
+            DomainHabitEntity(
                 "Читать новости",
                 "Читать свежие новости",
                 2,
@@ -28,11 +29,11 @@ class TestInteraction : IInteraction {
                 LocalDateTime.now(),
                 1,
                 1,
-                list.size
+                id = list.size
             )
         )
         list.add(
-            HabitItemPresentationModel(
+            DomainHabitEntity(
                 "Физические упражнения",
                 "Заниматься физической нагрузкой в течении часа",
                 2,
@@ -44,18 +45,18 @@ class TestInteraction : IInteraction {
                 LocalDateTime.now(),
                 1,
                 1,
-                list.size
+                id = list.size
             )
         )
     }
 
-    override fun getPresentationList(): Flow<List<HabitItemPresentationModel>> {
+    override fun getPresentationList(): Flow<List<DomainHabitEntity>> {
         return flowOf(list)
     }
 
-    override fun addNewHabitFromPresentation(habit: HabitItemPresentationModel) {
+    override fun addNewHabitFromPresentation(habit: DomainHabitEntity) {
         list.add(
-            HabitItemPresentationModel(
+            DomainHabitEntity(
                 name = habit.name,
                 description = habit.description,
                 priority = habit.priority,
@@ -67,16 +68,16 @@ class TestInteraction : IInteraction {
                 initialDate = habit.initialDate,
                 totalCompleteTimes = habit.totalCompleteTimes,
                 currentCompleteTimes = habit.currentCompleteTimes,
-                list.size
+                id = list.size
             )
         )
     }
 
-    override fun updateHabitFromPresentation(habit: HabitItemPresentationModel) {
+    override fun updateHabitFromPresentation(habit: DomainHabitEntity) {
         list[habit.getID()] = habit
     }
 
-    override suspend fun getPresentationHabit(id: Int): HabitItemPresentationModel {
+    override suspend fun getPresentationHabit(id: Int): DomainHabitEntity {
         return list[id]
     }
 
@@ -84,7 +85,8 @@ class TestInteraction : IInteraction {
         list.removeAt(id)
     }
 
-    override fun addDone(id: Int) {
+    override suspend fun addDone(id: Int): Pair<ResultAddDate, Int> {
         list[id].doneDates.add(LocalDateTime.now())
+        return Pair(ResultAddDate.you_done, 0)
     }
 }

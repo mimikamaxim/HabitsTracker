@@ -32,8 +32,6 @@ android {
 }
 
 dependencies {
-    implementation project(':app')
-//    implementation project(':Data')
 
     //dependency injection
     //dagger2

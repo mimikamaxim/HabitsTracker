@@ -17,6 +17,12 @@
     <string name="no_habit_description_err_message">Please enter habit description</string>
     <string name="no_habit_allowed_executions_err_message">Please enter allowed executions</string>
     <string name="no_habit_days_period_err_message">Please enter days period</string>
+    <string name="do_more_prefix_message">Well done! Do it </string>
+    <string name="do_more_postfix_message"> more times</string>
+    <string name="you_done_message">Well done! You did it!</string>
+    <string name="can_do_it_more_prefix_message">You can do it </string>
+    <string name="can_do_it_more_postfix_message"> more times</string>
+    <string name="stop_doing_this_message">You already done you limit! Stop doing it!</string>
     <!--    text-->
     <string name="habit_title_text">Habit name</string>
     <string name="habit_description_text">Habit description</string>

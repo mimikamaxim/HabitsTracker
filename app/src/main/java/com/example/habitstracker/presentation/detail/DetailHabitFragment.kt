@@ -9,10 +9,10 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.domain.IInteraction
 import com.example.habitstracker.HabitsApplication
 import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentDetailHabitBinding
-import com.example.habitstracker.presentation.IInteraction
 import javax.inject.Inject
 
 

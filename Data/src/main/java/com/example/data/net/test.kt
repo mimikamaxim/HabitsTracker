@@ -1,5 +1,6 @@
 package com.example.data.net
 
+import com.example.data.NetRepository
 import kotlinx.coroutines.runBlocking
 
 fun main() {

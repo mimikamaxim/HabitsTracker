@@ -3,14 +3,14 @@ package com.example.habitstracker
 import android.app.Application
 import android.content.Context
 import com.example.data.HabitsLocalSQLRepository
+import com.example.data.NetRepository
 import com.example.data.room.HabitsRoomDatabase
+import com.example.domain.IInteraction
 import com.example.domain.Interaction
-import com.example.habitstracker.presentation.IInteraction
 import com.example.habitstracker.presentation.detail.DetailHabitFragment
 import com.example.habitstracker.presentation.detail.DetailHabitFragmentViewModel
 import com.example.habitstracker.presentation.habitsList.HabitsFragment
 import com.example.habitstracker.presentation.habitsList.HabitsListViewModel
-import com.example.habitstracker.presentation.test.TestInteraction
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -42,15 +42,21 @@ interface AppComponent {
 @Module()
 object SQL_RoomRepository {
     @Provides
+    @Singleton
     fun getRepository(database: HabitsRoomDatabase): HabitsLocalSQLRepository {
         return HabitsLocalSQLRepository(database.habitsDAO())
     }
 
+    @Singleton
     @Provides
-    fun getInteraction(repository: HabitsLocalSQLRepository): Interaction {
-        return Interaction(repository)
+    fun getInteraction(
+        sqlRepository: HabitsLocalSQLRepository,
+        netRepository: NetRepository
+    ): Interaction {
+        return Interaction(sqlRepository, netRepository)
     }
 
+    @Singleton
     @Provides
     fun getDatabase(@ApplicationContext context: Context): HabitsRoomDatabase {
         return HabitsRoomDatabase.getDatabase(context)
@@ -61,15 +67,20 @@ object SQL_RoomRepository {
         return interaction
     }
 
+    @Provides
+    fun getNetRepository(): NetRepository {
+        return NetRepository()
+    }
+
 //    @Provides//test
-//    fun interInt (): IInteraction{//TODO change realisation
+//    fun interInt (): IInteraction{
 //        return TestInteraction()
 //    }
 
-    @Provides
-    fun getTestInteraction(): TestInteraction {
-        return TestInteraction()
-    }
+//    @Provides
+//    fun getTestInteraction(): TestInteraction {
+//        return TestInteraction()
+//    }
 }
 
 @Module

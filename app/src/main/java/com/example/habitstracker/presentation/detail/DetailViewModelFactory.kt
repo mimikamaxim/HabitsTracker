@@ -3,7 +3,7 @@ package com.example.habitstracker.presentation.detail
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.habitstracker.presentation.IInteraction
+import com.example.domain.IInteraction
 
 class DetailViewModelFactory(
     private val arguments: Bundle?,

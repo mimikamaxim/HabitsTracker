@@ -1,87 +1,121 @@
 package com.example.domain
 
-//import com.example.habitstracker.presentation.HabitItemPresentationModel
-import com.example.data.HabitsLocalSQLRepository
-import com.example.data.net.NetRepository
-import com.example.data.room.HabitSQLEntity
-import com.example.habitstracker.HabitsApplication.Companion.applicationScope
-import com.example.habitstracker.presentation.HabitItemPresentationModel
-import com.example.habitstracker.presentation.IInteraction
+import com.example.domain.entitys.DomainHabitEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import javax.inject.Inject
 
-class Interaction @Inject constructor(var repositorySQL: HabitsLocalSQLRepository) : IInteraction {
+class Interaction @Inject constructor(
+    var repositorySQL: IHabitsSQLRepository,
+    var repositoryNet: INetRepository,
+//    var toastProvider: IToastProvider
+) : IInteraction {
 
-    private val repositoryNet = NetRepository()
-    private val dataList: Flow<List<HabitSQLEntity>> = repositorySQL.listHabits
+    private val dataList: Flow<List<DomainHabitEntity>> = repositorySQL.listHabits
+    private val scope = CoroutineScope(SupervisorJob())
 
     init {
         sync()
     }
 
-    override fun getPresentationList() = dataList.map { list ->
-        Mapper.dataListToPresentationList(list)
-    }
+    override fun getPresentationList() = dataList
 
-    override fun addNewHabitFromPresentation(habit: HabitItemPresentationModel) {
-        applicationScope.launch {
-            val sqlEntity: HabitSQLEntity = Mapper.presentationHabitToDataEntity(habit, null)
-            repositorySQL.insert(sqlEntity)
-            val uid = repositoryNet.uploadNewHabit(Mapper.sqlToNewNet(sqlEntity))
-            val ourHabit = repositorySQL.getLastItem()
-            repositorySQL.addRemoteUid(ourHabit.id!!, uid)
+    override fun addNewHabitFromPresentation(habit: DomainHabitEntity) {
+        scope.launch {
+            val id = repositorySQL.insert(habit)
+            val uid = repositoryNet.uploadNewHabit(habit)
+            repositorySQL.addRemoteUid(id, uid)
         }
     }
 
-    override fun updateHabitFromPresentation(habit: HabitItemPresentationModel) {
-        applicationScope.launch {
-            val sqlHabit = repositorySQL.getItem(habit.getID())
-            val uid = sqlHabit.uid!!
-            val habitForUpdate = Mapper.presentationHabitToDataEntity(habit, uid)
-            repositorySQL.update(habitForUpdate)
-            repositoryNet.updateHabit(Mapper.sqlToNet(habitForUpdate, uid))
+    override fun updateHabitFromPresentation(habit: DomainHabitEntity) {
+        scope.launch {
+            repositorySQL.update(habit)
+            if (habit.uid.isEmpty()) {
+                addNewHabitFromPresentation(habit)
+            } else {
+                repositoryNet.updateHabit(habit)
+            }
         }
     }
 
-    override suspend fun getPresentationHabit(id: Int): HabitItemPresentationModel {
-        val habit = repositorySQL.getItem(id)
-        return Mapper.dataEntityToPresentationModel(habit)
+    override suspend fun getPresentationHabit(id: Int): DomainHabitEntity {
+        return repositorySQL.getItem(id)
     }
 
     override fun deleteHabit(id: Int) {
-        applicationScope.launch {
-            val sqlEntity = repositorySQL.getItem(id)
-            val uid = sqlEntity.uid
-            if (uid != null) repositoryNet.deleteHabit(uid)
-            repositorySQL.delete(sqlEntity)
+        scope.launch {
+            val habit = repositorySQL.getItem(id)
+            repositorySQL.delete(id.toLong())
+            if (habit.uid.isNotEmpty()) repositoryNet.deleteHabit(habit.uid)
         }
     }
 
-    override fun addDone(id: Int) {
-        applicationScope.launch {
-            val sqlEntity = repositorySQL.getItem(id)
-            val timeStamp = DateTimeConverterHelper.getCurrentTimeInEpochSeconds()
-            sqlEntity.doneDates.add(timeStamp)
+    override suspend fun addDone(id: Int): Pair<ResultAddDate, Int> {
+        val job = scope.async {
+            var remainder: Int
+            val habit = repositorySQL.getItem(id)
+            val timeStamp = System.currentTimeMillis() / 1000
             val curLocal = LocalDateTime.now()
-            val initialDate =
-                DateTimeConverterHelper.timeInEpochSecondsToLocalDateTime(sqlEntity.initialDate)
+            habit.doneDates.add(curLocal)
+            val initialDate = habit.initialDate
             //reset period
-            if (curLocal > initialDate.plusDays(sqlEntity.periodInDays.toLong())) {
-                sqlEntity.currentCompleteTimes = 0
-                sqlEntity.initialDate = timeStamp
+            if (curLocal > initialDate.plusDays(habit.periodInDays.toLong())) {
+                habit.currentCompleteTimes = 0
+                habit.initialDate = curLocal
             }
-            sqlEntity.currentCompleteTimes++
-            repositorySQL.update(sqlEntity)
-            if (sqlEntity.uid != null) repositoryNet.addDoneDate(timeStamp, sqlEntity.uid!!)
+            habit.currentCompleteTimes++
+            remainder = habit.frequencyOfAllowedExecutions - habit.currentCompleteTimes
+            var pair: Pair<ResultAddDate, Int>
+            if (remainder >= 0)
+                pair = if (habit.isGood)
+                    Pair(ResultAddDate.do_more, remainder)
+                else
+                    Pair(ResultAddDate.can_do_more, remainder)
+            else
+                pair = if (habit.isGood)
+                    Pair(ResultAddDate.you_done, remainder)
+                else
+                    Pair(ResultAddDate.stop_doing_it, remainder)
+//            if (remainder < habit.frequencyOfAllowedExecutions)
+//                if (habit.isGood)
+//                    toastProvider.showToast(
+//                        buildString {
+//                            append(R.string.can_do_it_more_prefix_message)
+//                            append(remainder)
+//                            append(R.string.can_do_it_more_postfix_message)
+//                        }
+//                    )
+//                else
+//                    toastProvider.showToast(
+//                        buildString {
+//                            append(R.string.can_do_it_more_prefix_message)
+//                            append(remainder)
+//                            append(R.string.can_do_it_more_postfix_message)
+//                        }
+//                    )
+//            else
+//                if (habit.isGood)
+//                    toastProvider.showToast(Resources.getString(R.string.you_done_message))
+//                else
+//                    toastProvider.showToast(Resources.getString(R.string.you_done_message))
+
+            repositorySQL.update(habit)
+            if (habit.uid.isNotEmpty()) repositoryNet.addDoneDate(timeStamp, habit.uid)
+            pair
         }
+        return job.await()
     }
 
     fun sync() {
-        applicationScope.launch {
-            var localList = listOf<HabitSQLEntity>()
+        scope.launch {
+            var localList = listOf<DomainHabitEntity>()
             dataList.collect {
                 localList = it
             }
@@ -91,14 +125,22 @@ class Interaction @Inject constructor(var repositorySQL: HabitsLocalSQLRepositor
                 localList.forEach { locEn ->
                     if (netEn.uid == locEn.uid) isSync = true
                 }
-                if (!isSync) repositorySQL.insert(Mapper.netToSQL(netEn))
+                if (!isSync) repositorySQL.insert(netEn)
             }
             localList.forEach {
-                if (it.uid == null) {
-                    val uid = repositoryNet.uploadNewHabit(Mapper.sqlToNewNet(it))
-                    val ourHabit = repositorySQL.getLastItem()
-                    repositorySQL.addRemoteUid(ourHabit.id!!, uid)
-                    //todo done dates
+                if (it.uid.isEmpty()) {
+                    val uid = repositoryNet.uploadNewHabit(it)
+                    repositorySQL.addRemoteUid(it.getID().toLong(), uid)
+                    if (it.doneDates.isNotEmpty())
+                        it.doneDates.forEach {
+                            repositoryNet.addDoneDate(
+                                it.toEpochSecond(
+                                    ZoneOffset.systemDefault().rules.getOffset(
+                                        Instant.now()
+                                    )
+                                ), uid
+                            )
+                        }
                 }
             }
         }

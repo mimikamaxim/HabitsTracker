@@ -112,7 +112,6 @@
         app:layout_constraintTop_toBottomOf="@+id/item_period"
         tools:text="current_complete_times" />
 
-    <!--TODO 1 пока так потом, возможно переделать после теста-->
     <TextView
         android:id="@+id/done_dates"
         android:layout_width="0dp"
