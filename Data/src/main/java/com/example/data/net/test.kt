@@ -5,7 +5,7 @@ import kotlinx.coroutines.runBlocking
 
 fun main() {
     runBlocking {
-        val netInt = NetRepository()
+        val netInt = NetRepository(this)
         var list = netInt.getNetHabits()
         list.forEach { println(it) }
 //        println("_______________________________________________________")

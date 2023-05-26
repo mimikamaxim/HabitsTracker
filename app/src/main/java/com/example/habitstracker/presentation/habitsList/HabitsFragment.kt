@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.domain.IInteraction
@@ -16,6 +17,7 @@ import com.example.habitstracker.R
 import com.example.habitstracker.databinding.FragmentHabitsListBinding
 import com.example.habitstracker.myLogger
 import com.example.habitstracker.presentation.detail.KEY_ID
+import kotlinx.coroutines.channels.consumeEach
 import javax.inject.Inject
 
 class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType.ALL) : Fragment() {
@@ -98,8 +100,15 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
 
         binding.bottomSheet.sortByDefaultBtn.setOnClickListener { viewModel.sortByHabitId() }
 
-        viewModel.toastSource.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launchWhenResumed {
+            viewModel.toastChannel.consumeEach { it ->
+                if (it != null) Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                else Toast.makeText(
+                    requireContext(),
+                    getString(R.string.done_message),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         return binding.root

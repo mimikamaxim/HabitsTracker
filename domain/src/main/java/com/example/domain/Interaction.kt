@@ -2,7 +2,6 @@ package com.example.domain
 
 import com.example.domain.entitys.DomainHabitEntity
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -14,11 +13,10 @@ import javax.inject.Inject
 class Interaction @Inject constructor(
     var repositorySQL: IHabitsSQLRepository,
     var repositoryNet: INetRepository,
-//    var toastProvider: IToastProvider
+    var scope: CoroutineScope
 ) : IInteraction {
 
     private val dataList: Flow<List<DomainHabitEntity>> = repositorySQL.listHabits
-    private val scope = CoroutineScope(SupervisorJob())
 
     init {
         sync()
@@ -83,29 +81,6 @@ class Interaction @Inject constructor(
                     Pair(ResultAddDate.you_done, remainder)
                 else
                     Pair(ResultAddDate.stop_doing_it, remainder)
-//            if (remainder < habit.frequencyOfAllowedExecutions)
-//                if (habit.isGood)
-//                    toastProvider.showToast(
-//                        buildString {
-//                            append(R.string.can_do_it_more_prefix_message)
-//                            append(remainder)
-//                            append(R.string.can_do_it_more_postfix_message)
-//                        }
-//                    )
-//                else
-//                    toastProvider.showToast(
-//                        buildString {
-//                            append(R.string.can_do_it_more_prefix_message)
-//                            append(remainder)
-//                            append(R.string.can_do_it_more_postfix_message)
-//                        }
-//                    )
-//            else
-//                if (habit.isGood)
-//                    toastProvider.showToast(Resources.getString(R.string.you_done_message))
-//                else
-//                    toastProvider.showToast(Resources.getString(R.string.you_done_message))
-
             repositorySQL.update(habit)
             if (habit.uid.isNotEmpty()) repositoryNet.addDoneDate(timeStamp, habit.uid)
             pair
@@ -113,7 +88,7 @@ class Interaction @Inject constructor(
         return job.await()
     }
 
-    fun sync() {
+    private fun sync() {
         scope.launch {
             var localList = listOf<DomainHabitEntity>()
             dataList.collect {
@@ -127,12 +102,12 @@ class Interaction @Inject constructor(
                 }
                 if (!isSync) repositorySQL.insert(netEn)
             }
-            localList.forEach {
-                if (it.uid.isEmpty()) {
-                    val uid = repositoryNet.uploadNewHabit(it)
-                    repositorySQL.addRemoteUid(it.getID().toLong(), uid)
-                    if (it.doneDates.isNotEmpty())
-                        it.doneDates.forEach {
+            localList.forEach { localHabit ->
+                if (localHabit.uid.isEmpty()) {
+                    val uid = repositoryNet.uploadNewHabit(localHabit)
+                    repositorySQL.addRemoteUid(localHabit.getID().toLong(), uid)
+                    if (localHabit.doneDates.isNotEmpty())
+                        localHabit.doneDates.forEach {
                             repositoryNet.addDoneDate(
                                 it.toEpochSecond(
                                     ZoneOffset.systemDefault().rules.getOffset(

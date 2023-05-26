@@ -8,24 +8,23 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.IInteraction
 import com.example.domain.ResultAddDate
 import com.example.domain.entitys.DomainHabitEntity
-import com.example.habitstracker.HabitsApplication.Companion.applicationScope
 import com.example.habitstracker.R
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
 class HabitsListViewModel(
     listType: HabitsListType = HabitsListType.ALL,
-    val interaction: IInteraction, //injected
-    val context: Context
+    val interaction: IInteraction,
+    context: Context
 ) : ViewModel() {
-
+    private val context = WeakReference(context)
     private var originalList = listOf<DomainHabitEntity>()
     private val _list: MutableLiveData<List<DomainHabitEntity>> = MutableLiveData()
     val list: LiveData<List<DomainHabitEntity>> = _list
 
-    private var _toastSource: MutableLiveData<String> = MutableLiveData("")
-    val toastSource = _toastSource
-
+    val toastChannel = Channel<String?>(Channel.CONFLATED)
 
     private val presentationList = interaction.getPresentationList()
 
@@ -63,26 +62,30 @@ class HabitsListViewModel(
     }
 
     fun addDone(id: Int) {
-        applicationScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.Main) {
             val result = interaction.addDone(id)
             val resultType = result.first
             val resultReminder = result.second
             when (resultType) {
-                ResultAddDate.do_more -> _toastSource.value = buildString {
-                    append(context.getString(R.string.do_more_prefix_message))
-                    append(resultReminder)
-                    append(context.getString(R.string.do_more_postfix_message))
-                }
-                ResultAddDate.can_do_more -> _toastSource.value = buildString {
-                    append(context.getString(R.string.can_do_it_more_prefix_message))
-                    append(resultReminder)
-                    append(context.getString(R.string.can_do_it_more_postfix_message))
-                }
-                ResultAddDate.you_done -> _toastSource.value =
-                    context.getString(R.string.you_done_message)
-                ResultAddDate.stop_doing_it -> _toastSource.value =
-                    context.getString(R.string.stop_doing_this_message)
+                ResultAddDate.do_more -> sendToast(
+                    context.get()?.getString(R.string.do_more_prefix_message, resultReminder)
+                )
+                ResultAddDate.can_do_more -> sendToast(
+                    context.get()?.getString(R.string.can_do_it_more_prefix_message, resultReminder)
+                )
+                ResultAddDate.you_done -> sendToast(
+                    context.get()?.getString(R.string.you_done_message)
+                )
+                ResultAddDate.stop_doing_it -> sendToast(
+                    context.get()?.getString(R.string.stop_doing_this_message)
+                )
             }
+        }
+    }
+
+    private fun sendToast(s: String?) {
+        viewModelScope.launch {
+            toastChannel.send(s)
         }
     }
 }

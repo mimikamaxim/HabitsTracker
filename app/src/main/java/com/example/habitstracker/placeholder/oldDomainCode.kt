@@ -94,7 +94,7 @@ package com.example.habitstracker.placeholder
 //    init {
 //        val daggerComponent = DaggerAppComponent
 //            .builder()
-//            .build()//todo как инжектить в поле если нет application
+//            .build()
 //        daggerComponent.inject(this)
 ////        HabitsApplication.appComponent.inject(this)
 //    }

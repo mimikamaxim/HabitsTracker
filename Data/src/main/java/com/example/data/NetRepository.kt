@@ -10,15 +10,19 @@ import com.example.data.net.entity.UidEntity
 import com.example.domain.INetRepository
 import com.example.domain.Mapper
 import com.example.domain.entitys.DomainHabitEntity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class NetRepository : INetRepository {
-    private val scope = CoroutineScope(SupervisorJob())
+class NetRepository @Inject constructor(var scope: CoroutineScope) : INetRepository {
+    //    private val scope = CoroutineScope(SupervisorJob())
     private val habitApiService = createApiService()
     private val token = "9588724c-8c76-4cb5-9a54-0dfd834c02f4"
     private val authorization = "Authorization"
