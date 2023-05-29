@@ -10,5 +10,5 @@ interface IInteraction {
 
     suspend fun getPresentationHabit(id: Int): DomainHabitEntity
     fun deleteHabit(id: Int)
-    suspend fun addDone(id: Int): Pair<ResultAddDate, Int>
+    suspend fun addDone(id: Int): AddDoneResult
 }

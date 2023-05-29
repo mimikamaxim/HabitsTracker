@@ -1,8 +1,9 @@
 package com.example.habitstracker.presentation.test
 
 import android.graphics.Color
+import com.example.domain.AddDoneResult
 import com.example.domain.IInteraction
-import com.example.domain.ResultAddDate
+import com.example.domain.YouDone
 import com.example.domain.entitys.DomainHabitEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -85,8 +86,8 @@ class TestInteraction : IInteraction {
         list.removeAt(id)
     }
 
-    override suspend fun addDone(id: Int): Pair<ResultAddDate, Int> {
+    override suspend fun addDone(id: Int): AddDoneResult {
         list[id].doneDates.add(LocalDateTime.now())
-        return Pair(ResultAddDate.you_done, 0)
+        return YouDone
     }
 }

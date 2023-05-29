@@ -55,7 +55,7 @@ class Interaction @Inject constructor(
         }
     }
 
-    override suspend fun addDone(id: Int): Pair<ResultAddDate, Int> {
+    override suspend fun addDone(id: Int): AddDoneResult {
         val job = scope.async {
             var remainder: Int
             val habit = repositorySQL.getItem(id)
@@ -70,20 +70,24 @@ class Interaction @Inject constructor(
             }
             habit.currentCompleteTimes++
             remainder = habit.frequencyOfAllowedExecutions - habit.currentCompleteTimes
-            var pair: Pair<ResultAddDate, Int>
+            var result: AddDoneResult
             if (remainder >= 0)
-                pair = if (habit.isGood)
-                    Pair(ResultAddDate.do_more, remainder)
+                result = if (habit.isGood)
+                    DoMore(remainder)
+//                    Pair(ResultAddDate.do_more, remainder)
                 else
-                    Pair(ResultAddDate.can_do_more, remainder)
+                    CanDoMore(remainder)
+//                    Pair(ResultAddDate.can_do_more, remainder)
             else
-                pair = if (habit.isGood)
-                    Pair(ResultAddDate.you_done, remainder)
+                result = if (habit.isGood)
+                    YouDone
+//                    Pair(ResultAddDate.you_done, remainder)
                 else
-                    Pair(ResultAddDate.stop_doing_it, remainder)
+                    StopDoingIt
+//                    Pair(ResultAddDate.stop_doing_it, remainder)
             repositorySQL.update(habit)
             if (habit.uid.isNotEmpty()) repositoryNet.addDoneDate(timeStamp, habit.uid)
-            pair
+            result
         }
         return job.await()
     }

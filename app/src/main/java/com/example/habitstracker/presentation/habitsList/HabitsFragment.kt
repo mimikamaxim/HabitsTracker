@@ -102,12 +102,15 @@ class HabitsFragment(private val habitsListType: HabitsListType = HabitsListType
 
         lifecycleScope.launchWhenResumed {
             viewModel.toastChannel.consumeEach { it ->
-                if (it != null) Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                else Toast.makeText(
-                    requireContext(),
-                    getString(R.string.done_message),
-                    Toast.LENGTH_SHORT
-                ).show()
+                when (it) {
+                    is Message -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                        .show()
+                    is NoContext -> Toast.makeText(
+                        requireContext(),
+                        getString(R.string.done_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
 

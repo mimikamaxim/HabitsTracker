@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.IInteraction
-import com.example.domain.ResultAddDate
+import com.example.domain.*
 import com.example.domain.entitys.DomainHabitEntity
+import com.example.habitstracker.HabitsApplication.Companion.applicationScope
 import com.example.habitstracker.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -24,7 +24,7 @@ class HabitsListViewModel(
     private val _list: MutableLiveData<List<DomainHabitEntity>> = MutableLiveData()
     val list: LiveData<List<DomainHabitEntity>> = _list
 
-    val toastChannel = Channel<String?>(Channel.CONFLATED)
+    val toastChannel = Channel<ToastFlow>(Channel.CONFLATED)
 
     private val presentationList = interaction.getPresentationList()
 
@@ -62,30 +62,31 @@ class HabitsListViewModel(
     }
 
     fun addDone(id: Int) {
-        viewModelScope.launch(Dispatchers.Main) {
+        applicationScope.launch(Dispatchers.Main) {
             val result = interaction.addDone(id)
-            val resultType = result.first
-            val resultReminder = result.second
-            when (resultType) {
-                ResultAddDate.do_more -> sendToast(
-                    context.get()?.getString(R.string.do_more_prefix_message, resultReminder)
+            when (result) {
+                is DoMore -> sendToast(
+                    context.get()?.getString(R.string.do_more_message, result.reminder)
                 )
-                ResultAddDate.can_do_more -> sendToast(
-                    context.get()?.getString(R.string.can_do_it_more_prefix_message, resultReminder)
+                is CanDoMore -> sendToast(
+                    context.get()?.getString(R.string.can_do_it_more_message, result.reminder)
                 )
-                ResultAddDate.you_done -> sendToast(
+                is YouDone -> sendToast(
                     context.get()?.getString(R.string.you_done_message)
                 )
-                ResultAddDate.stop_doing_it -> sendToast(
+                is StopDoingIt -> sendToast(
                     context.get()?.getString(R.string.stop_doing_this_message)
                 )
             }
         }
     }
 
-    private fun sendToast(s: String?) {
+    private fun sendToast(p: String?) {
         viewModelScope.launch {
-            toastChannel.send(s)
+            if (p != null)
+                toastChannel.send(Message(p))
+            else
+                toastChannel.send(NoContext)
         }
     }
 }
