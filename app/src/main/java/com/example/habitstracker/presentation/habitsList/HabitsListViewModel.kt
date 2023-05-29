@@ -64,29 +64,38 @@ class HabitsListViewModel(
     fun addDone(id: Int) {
         applicationScope.launch(Dispatchers.Main) {
             val result = interaction.addDone(id)
-            when (result) {
-                is DoMore -> sendToast(
-                    context.get()?.getString(R.string.do_more_message, result.reminder)
-                )
-                is CanDoMore -> sendToast(
-                    context.get()?.getString(R.string.can_do_it_more_message, result.reminder)
-                )
-                is YouDone -> sendToast(
-                    context.get()?.getString(R.string.you_done_message)
-                )
-                is StopDoingIt -> sendToast(
-                    context.get()?.getString(R.string.stop_doing_this_message)
-                )
-            }
+            val context = context.get()
+            if (context == null)
+                sendToast(NoContext)
+            else
+                when (result) {
+                    is DoMore -> sendToast(
+                        Message(
+                            context.getString(R.string.do_more_message, result.reminder)
+                        )
+                    )
+                    is CanDoMore -> sendToast(
+                        Message(
+                            context.getString(R.string.can_do_it_more_message, result.reminder)
+                        )
+                    )
+                    is YouDone -> sendToast(
+                        Message(
+                            context.getString(R.string.you_done_message)
+                        )
+                    )
+                    is StopDoingIt -> sendToast(
+                        Message(
+                            context.getString(R.string.stop_doing_this_message)
+                        )
+                    )
+                }
         }
     }
 
-    private fun sendToast(p: String?) {
+    private fun sendToast(p: ToastFlow) {
         viewModelScope.launch {
-            if (p != null)
-                toastChannel.send(Message(p))
-            else
-                toastChannel.send(NoContext)
+            toastChannel.send(p)
         }
     }
 }
