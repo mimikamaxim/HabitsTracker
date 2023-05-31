@@ -24,7 +24,7 @@ class HabitsListViewModel(
     private val _list: MutableLiveData<List<DomainHabitEntity>> = MutableLiveData()
     val list: LiveData<List<DomainHabitEntity>> = _list
 
-    val toastChannel = Channel<ToastFlow>(Channel.CONFLATED)
+    val toastChannel = Channel<ToastType>(Channel.CONFLATED)
 
     private val presentationList = interaction.getPresentationList()
 
@@ -93,7 +93,7 @@ class HabitsListViewModel(
         }
     }
 
-    private fun sendToast(p: ToastFlow) {
+    private fun sendToast(p: ToastType) {
         viewModelScope.launch {
             toastChannel.send(p)
         }

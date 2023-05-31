@@ -74,17 +74,13 @@ class Interaction @Inject constructor(
             if (remainder >= 0)
                 result = if (habit.isGood)
                     DoMore(remainder)
-//                    Pair(ResultAddDate.do_more, remainder)
                 else
                     CanDoMore(remainder)
-//                    Pair(ResultAddDate.can_do_more, remainder)
             else
                 result = if (habit.isGood)
                     YouDone
-//                    Pair(ResultAddDate.you_done, remainder)
                 else
                     StopDoingIt
-//                    Pair(ResultAddDate.stop_doing_it, remainder)
             repositorySQL.update(habit)
             if (habit.uid.isNotEmpty()) repositoryNet.addDoneDate(timeStamp, habit.uid)
             result
