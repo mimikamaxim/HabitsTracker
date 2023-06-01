@@ -8,12 +8,12 @@ import org.junit.Assert.*
 import org.junit.Test
 import java.time.LocalDateTime
 
-val habit = DomainHabitEntity(
+val badHabit = DomainHabitEntity(
     "tes1",
     "descr",
     uid = "uid",
     priority = 0,
-    frequencyOfAllowedExecutions = 1,
+    frequencyOfAllowedExecutions = 2,
     isGood = false,
     periodInDays = 1,
     color = 0,
@@ -24,7 +24,7 @@ val habit = DomainHabitEntity(
     id = 1
 )
 
-val habit2 = DomainHabitEntity(
+val badHabit2 = DomainHabitEntity(
     "tes3",
     "descr",
     uid = "uid",
@@ -68,18 +68,18 @@ class InteractionTest {
             repositorySQL = SQLTestRepository(testList),
             scope = this@runBlocking
         )
-        interaction.addNewHabitFromPresentation(habit)
+        interaction.addNewHabitFromPresentation(badHabit)
         val presentationFlow = interaction.getPresentationList()
         var presentationList: List<DomainHabitEntity> = listOf()
         presentationFlow.collect {
             presentationList = it
         }
-        assertEquals(true, presentationList.isNotEmpty())
+        assertEquals(testList.size, presentationList.size - 1)
     }
 
     @Test
     fun testUpdateHabitFromPresentation() = runBlocking {
-        val habit = habit2
+        val habit = badHabit2
         val interaction = Interaction(
             repositoryNet = NetTestRepository(),
             repositorySQL = SQLTestRepository(testList),
@@ -108,7 +108,7 @@ class InteractionTest {
 
     @Test
     fun testDeleteHabit() = runBlocking {
-        val habit = habit2
+        val habit = badHabit2
         val interaction = Interaction(
             repositoryNet = NetTestRepository(),
             repositorySQL = SQLTestRepository(testList),
@@ -122,6 +122,25 @@ class InteractionTest {
         }
         interaction.deleteHabit(presentationList.size - 1)
         assertFalse(presentationList.contains(habit))
+    }
+
+    @Test
+    fun addDoneTest() = runBlocking {
+        val habit = badHabit
+        val interaction = Interaction(
+            repositoryNet = NetTestRepository(),
+            repositorySQL = SQLTestRepository(testList),
+            scope = this@runBlocking
+        )
+        interaction.addNewHabitFromPresentation(habit)
+        val presentationFlow = interaction.getPresentationList()
+        var presentationList: List<DomainHabitEntity> = listOf()
+        presentationFlow.collect {
+            presentationList = it
+        }
+        val lastIndex = presentationList.lastIndex
+        val result = interaction.addDone(lastIndex)
+        assertTrue(result is CanDoMore)
     }
 }
 
